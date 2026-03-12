@@ -29,19 +29,16 @@ const lotteryTypes = [
   { id: 'dow-star',       name: 'ดาวโจนส์ STAR', flag: 'https://flagcdn.com/w80/us.png', category: 'รายวัน' },
   { id: 'lao-santipab',   name: 'ลาวสันติภาพ',   flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
   { id: 'lao-patuxay',    name: 'ลาวประตูชัย',   flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
-
   // รัฐบาลไทย
   { id: 'thai-gov', name: 'รัฐบาลไทย', flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาลไทย' },
   { id: 'omsin',    name: 'ออมสิน',    flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาลไทย' },
   { id: 'baac',     name: 'ธ.ก.ส',     flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาลไทย' },
-
   // ฮานอย
   { id: 'hanoi',        name: 'ฮานอย',       flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
   { id: 'hanoi-sp',     name: 'ฮานอยพิเศษ',  flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
   { id: 'hanoi-normal', name: 'ฮานอยปกติ',   flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
   { id: 'hanoi-vip',    name: 'ฮานอย VIP',   flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
   { id: 'hanoi-bundle', name: 'ฮานอยมัดรวม', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-
   // ต่างประเทศ
   { id: 'lao-pattana',     name: 'ลาวพัฒนา',     flag: 'https://flagcdn.com/w80/la.png', category: 'ต่างประเทศ' },
   { id: 'hanoi-foreign',   name: 'ฮานอย',        flag: 'https://flagcdn.com/w80/vn.png', category: 'ต่างประเทศ' },
@@ -49,7 +46,6 @@ const lotteryTypes = [
   { id: 'china-f',         name: 'จีน',           flag: 'https://flagcdn.com/w80/cn.png', category: 'ต่างประเทศ' },
   { id: 'singapore-f',     name: 'สิงคโปร์',      flag: 'https://flagcdn.com/w80/sg.png', category: 'ต่างประเทศ' },
   { id: 'malaysia-f',      name: 'มาเลเซีย',     flag: 'https://flagcdn.com/w80/my.png', category: 'ต่างประเทศ' },
-
   // หุ้น
   { id: 'thai-morning',       name: 'หุ้นไทยเช้า',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น' },
   { id: 'thai-noon',          name: 'หุ้นไทยเที่ยง',     flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น' },
@@ -70,7 +66,6 @@ const lotteryTypes = [
   { id: 'russia',             name: 'หุ้นรัสเซีย',       flag: 'https://flagcdn.com/w80/ru.png', category: 'หุ้น' },
   { id: 'uk',                 name: 'หุ้นอังกฤษ',        flag: 'https://flagcdn.com/w80/gb.png', category: 'หุ้น' },
   { id: 'dowjones',           name: 'หุ้นดาวโจนส์',      flag: 'https://flagcdn.com/w80/us.png', category: 'หุ้น' },
-
   // หุ้น VIP
   { id: 'thai-morning-vip',       name: 'หุ้นไทยเช้า VIP',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น VIP' },
   { id: 'thai-evening-vip',       name: 'หุ้นไทยเย็น VIP',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น VIP' },
@@ -88,35 +83,52 @@ const lotteryTypes = [
   { id: 'russia-vip-s',           name: 'หุ้นรัสเซีย VIP',        flag: 'https://flagcdn.com/w80/ru.png', category: 'หุ้น VIP' },
   { id: 'uk-vip-s',               name: 'หุ้นอังกฤษ VIP',         flag: 'https://flagcdn.com/w80/gb.png', category: 'หุ้น VIP' },
   { id: 'dowjones-vip-s',         name: 'หุ้นดาวโจนส์ VIP',       flag: 'https://flagcdn.com/w80/us.png', category: 'หุ้น VIP' },
-
   // พิเศษ
   { id: 'hanoi-noon',    name: 'ฮานอยเที่ยง', flag: 'https://flagcdn.com/w80/vn.png', category: 'พิเศษ' },
   { id: 'lao-special',   name: 'ลาวพิเศษ',    flag: 'https://flagcdn.com/w80/la.png', category: 'พิเศษ' },
   { id: 'lao-vip',       name: 'ลาวVIP',       flag: 'https://flagcdn.com/w80/la.png', category: 'พิเศษ' },
   { id: 'lao-viangchan', name: 'ลาวเวียงจัน', flag: 'https://flagcdn.com/w80/la.png', category: 'พิเศษ' },
-
   // อื่นๆ
   { id: 'hanoi-extra', name: 'ฮานอย EXTRA',   flag: 'https://flagcdn.com/w80/vn.png', category: 'อื่นๆ' },
   { id: 'hanoi-cny',   name: 'ฮานอยตรุษจีน', flag: 'https://flagcdn.com/w80/vn.png', category: 'อื่นๆ' },
 ]
 
-const LAYOUT_PRESETS = [
-  { id: 'classic',  label: 'คลาสสิก',  icon: '⊞', twoSide: 'right', promOX: -8,  promOY: 0,   twoOY: 0,   threeOY: 0  },
-  { id: 'center',   label: 'กลาง',     icon: '⊡', twoSide: 'right', promOX: 0,   promOY: 0,   twoOY: 0,   threeOY: 0  },
-  { id: 'left',     label: 'เลขซ้าย',  icon: '◧', twoSide: 'left',  promOX: 12,  promOY: 0,   twoOY: 0,   threeOY: 0  },
-  { id: 'high',     label: 'เลขบน',    icon: '↑', twoSide: 'right', promOX: 0,   promOY: -8,  twoOY: -8,  threeOY: 0  },
-  { id: 'low',      label: 'เลขล่าง',  icon: '↓', twoSide: 'right', promOX: 0,   promOY: 8,   twoOY: 8,   threeOY: 0  },
-  { id: 'split',    label: 'แยกซ้าย',  icon: '⊟', twoSide: 'left',  promOX: -5,  promOY: -5,  twoOY: 0,   threeOY: 0  },
-] as const
+// ─── Size presets like Canva ──────────────────────────────────────────────────
+const SIZE_PRESETS = [
+  { id: 'ig-story',  label: 'IG Story',           w: 1080, h: 1920, icon: '📱' },
+  { id: 'ig-post',   label: 'IG Post (1:1)',      w: 1080, h: 1080, icon: '📸' },
+  { id: 'ig-45',     label: 'IG Post (4:5)',      w: 1080, h: 1350, icon: '🖼' },
+  { id: 'fb-post',   label: 'Facebook Post',      w: 1200, h: 630,  icon: '👤' },
+  { id: 'fb-story',  label: 'Facebook Story',     w: 1080, h: 1920, icon: '📖' },
+  { id: 'fb-cover',  label: 'Facebook Cover',     w: 820,  h: 312,  icon: '🏞' },
+  { id: 'tiktok',    label: 'TikTok',             w: 1080, h: 1920, icon: '🎵' },
+  { id: 'poster-a4', label: 'Poster A4',          w: 595,  h: 842,  icon: '📄' },
+  { id: 'poster-4x6',label: 'Poster 4×6"',        w: 400,  h: 600,  icon: '🖨' },
+  { id: 'lotto-std', label: 'หวยมาตรฐาน',         w: 400,  h: 700,  icon: '🎰' },
+  { id: 'line-share',label: 'LINE Share',          w: 520,  h: 520,  icon: '💬' },
+  { id: 'custom',    label: 'กำหนดเอง',            w: 0,    h: 0,    icon: '✏️' },
+]
 
+// ─── Fonts (extended with Thai fonts) ─────────────────────────────────────────
 const FONTS = [
-  { value: 'Prompt',          label: 'Prompt (ค่าเริ่มต้น)' },
-  { value: 'Sarabun',         label: 'Sarabun' },
-  { value: 'Kanit',           label: 'Kanit' },
-  { value: 'Mitr',            label: 'Mitr' },
-  { value: 'Noto Serif Thai', label: 'Noto Serif Thai' },
+  { value: 'Prompt',             label: 'Prompt' },
+  { value: 'Sarabun',            label: 'Sarabun' },
+  { value: 'Kanit',              label: 'Kanit' },
+  { value: 'Mitr',               label: 'Mitr' },
+  { value: 'K2D',                label: 'K2D' },
+  { value: 'Itim',               label: 'Itim (ลายมือ)' },
+  { value: 'Sriracha',           label: 'Sriracha (ลายมือ)' },
+  { value: 'Charm',              label: 'Charm' },
+  { value: 'Chonburi',           label: 'Chonburi (หนา)' },
+  { value: 'Bai Jamjuree',       label: 'Bai Jamjuree' },
+  { value: 'Chakra Petch',       label: 'Chakra Petch' },
+  { value: 'Kodchasan',          label: 'Kodchasan' },
+  { value: 'Krub',               label: 'Krub' },
+  { value: 'Mali',               label: 'Mali' },
+  { value: 'Noto Serif Thai',    label: 'Noto Serif Thai' },
   { value: 'IBM Plex Sans Thai', label: 'IBM Plex Sans Thai' },
-  { value: 'Cinzel',          label: 'Cinzel (Roman)' },
+  { value: 'Cinzel',             label: 'Cinzel (Roman)' },
+  { value: 'Impact',             label: 'Impact' },
 ]
 
 const ACCENT_COLORS = [
@@ -155,7 +167,6 @@ function App() {
 
   const [facebookName, setFacebookName] = useState('')
   const [lineId,       setLineId]       = useState('')
-  const [showWatermark,setShowWatermark] = useState(true)
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null)
   const [bgScale,  setBgScale]  = useState(100)
@@ -163,6 +174,8 @@ function App() {
   const [bgPosY,   setBgPosY]   = useState(50)
   const [overlayOpacity, setOverlayOpacity] = useState(30)
 
+  // Size preset system
+  const [activeSizePreset, setActiveSizePreset] = useState('lotto-std')
   const [posterWidth,  setPosterWidth]  = useState(400)
   const [posterHeight, setPosterHeight] = useState(700)
 
@@ -170,12 +183,13 @@ function App() {
   const [twoDigitSize,   setTwoDigitSize]   = useState(2.2)
   const [threeDigitSize, setThreeDigitSize] = useState(2.2)
 
-  const [activePreset,      setActivePreset]      = useState('classic')
-  const [twoDigitSide,      setTwoDigitSide]      = useState<'left' | 'right'>('right')
-  const [prominentOffsetX,  setProminentOffsetX]  = useState(-8)
-  const [prominentOffsetY,  setProminentOffsetY]  = useState(0)
-  const [twoDigitOffsetY,   setTwoDigitOffsetY]   = useState(0)
-  const [threeDigitOffsetY, setThreeDigitOffsetY] = useState(0)
+  // Position: each group has X and Y (percentage of poster)
+  const [promX, setPromX] = useState(50)    // 0=left, 100=right
+  const [promY, setPromY] = useState(50)    // 0=top, 100=bottom
+  const [twoX,  setTwoX]  = useState(82)    // default: right side
+  const [twoY,  setTwoY]  = useState(50)
+  const [threeX, setThreeX] = useState(50)  // center
+  const [threeY, setThreeY] = useState(88)  // near bottom
 
   const [posterFont,  setPosterFont]  = useState('Prompt')
   const [numberStyle, setNumberStyle] = useState('box')
@@ -195,10 +209,8 @@ function App() {
 
   const randomizeAllNumbers = () => {
     setProminentNumber(randOne())
-    setTwoDigitNumbers(Array.from({ length: MAX_NUMS }, (_, i) =>
-      i < twoDigitCount ? randTwo() : ''))
-    setThreeDigitNumbers(Array.from({ length: MAX_NUMS }, (_, i) =>
-      i < threeDigitCount ? randThree() : ''))
+    setTwoDigitNumbers(Array.from({ length: MAX_NUMS }, (_, i) => i < twoDigitCount ? randTwo() : ''))
+    setThreeDigitNumbers(Array.from({ length: MAX_NUMS }, (_, i) => i < threeDigitCount ? randThree() : ''))
     setSeed(rand(100000, 999999))
   }
 
@@ -210,15 +222,15 @@ function App() {
 
   const setToday = () => setLotteryDate(new Date().toISOString().split('T')[0])
 
-  const applyPreset = (id: string) => {
-    const p = LAYOUT_PRESETS.find(x => x.id === id)
+  const applySizePreset = (id: string) => {
+    const p = SIZE_PRESETS.find(x => x.id === id)
     if (!p) return
-    setActivePreset(id)
-    setTwoDigitSide(p.twoSide as 'left' | 'right')
-    setProminentOffsetX(p.promOX)
-    setProminentOffsetY(p.promOY)
-    setTwoDigitOffsetY(p.twoOY)
-    setThreeDigitOffsetY(p.threeOY)
+    setActiveSizePreset(id)
+    if (p.w > 0 && p.h > 0) {
+      const scale = Math.min(600 / p.w, 900 / p.h, 1)
+      setPosterWidth(Math.round(p.w * scale))
+      setPosterHeight(Math.round(p.h * scale))
+    }
   }
 
   const handleSelectLottery = (l: typeof lotteryTypes[0]) => {
@@ -234,12 +246,8 @@ function App() {
     r.readAsDataURL(file)
   }
 
-  const updateTwo   = (i: number, v: string) => {
-    const a = [...twoDigitNumbers]; a[i] = v.slice(0, 2); setTwoDigitNumbers(a)
-  }
-  const updateThree = (i: number, v: string) => {
-    const a = [...threeDigitNumbers]; a[i] = v.slice(0, 3); setThreeDigitNumbers(a)
-  }
+  const updateTwo   = (i: number, v: string) => { const a = [...twoDigitNumbers]; a[i] = v.slice(0, 2); setTwoDigitNumbers(a) }
+  const updateThree = (i: number, v: string) => { const a = [...threeDigitNumbers]; a[i] = v.slice(0, 3); setThreeDigitNumbers(a) }
 
   const formatDate = (s: string) => {
     if (!s) return ''
@@ -249,12 +257,7 @@ function App() {
 
   const capturePoster = async () => {
     if (!posterRef.current) return null
-    return html2canvas(posterRef.current, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-    })
+    return html2canvas(posterRef.current, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: null })
   }
 
   const downloadPNG = useCallback(async () => {
@@ -273,8 +276,7 @@ function App() {
       const c = await capturePoster()
       if (!c) return
       const w = window.open()
-      if (w) w.document.write(`
-        <html><head><title>${lotteryName}</title>
+      if (w) w.document.write(`<html><head><title>${lotteryName}</title>
         <style>body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0a0000}
         img{max-width:100%;max-height:100vh;object-fit:contain}</style></head>
         <body><img src="${c.toDataURL('image/png')}"></body></html>`)
@@ -296,51 +298,36 @@ function App() {
     ? `url(${backgroundImage})`
     : `linear-gradient(160deg, #3d0000 0%, #1e0000 30%, #0a0000 65%, #1e0000 100%)`
 
-  // ──────────────────────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════════════
   // SELECT PAGE
-  // ──────────────────────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════════════
   if (currentPage === 'select') {
     return (
       <div className="select-page">
         <div className="imperial-bg-overlay"></div>
-
         <div className="select-header">
           <div className="header-container">
-            <span className="corner-rune tl">◈</span>
-            <span className="corner-rune tr">◈</span>
-            <span className="corner-rune bl">◈</span>
-            <span className="corner-rune br">◈</span>
-
-            <div className="dragon-side">
-              <span className="dragon-icon dragon-left">🐉</span>
-            </div>
-
+            <span className="corner-rune tl">◈</span><span className="corner-rune tr">◈</span>
+            <span className="corner-rune bl">◈</span><span className="corner-rune br">◈</span>
+            <div className="dragon-side"><span className="dragon-icon dragon-left">🐉</span></div>
             <div className="header-inner">
               <div className="header-ornament top">
-                <span className="ornament-gem">◆</span>
-                <span className="ornament-bar"></span>
-                <span className="ornament-gem">✦</span>
-                <span className="ornament-bar"></span>
+                <span className="ornament-gem">◆</span><span className="ornament-bar"></span>
+                <span className="ornament-gem">✦</span><span className="ornament-bar"></span>
                 <span className="ornament-gem">◆</span>
               </div>
               <h1>DUMPSC จัดให้</h1>
               <p className="header-subtitle">โปรแกรมทำนายหวยอัตโนมัติ</p>
               <div className="header-badge">⚜ ทีเด็ดหวยทุกงวด ⚜</div>
               <div className="header-ornament bottom">
-                <span className="ornament-gem">◆</span>
-                <span className="ornament-bar"></span>
-                <span className="ornament-gem">✦</span>
-                <span className="ornament-bar"></span>
+                <span className="ornament-gem">◆</span><span className="ornament-bar"></span>
+                <span className="ornament-gem">✦</span><span className="ornament-bar"></span>
                 <span className="ornament-gem">◆</span>
               </div>
             </div>
-
-            <div className="dragon-side">
-              <span className="dragon-icon dragon-right">🐉</span>
-            </div>
+            <div className="dragon-side"><span className="dragon-icon dragon-right">🐉</span></div>
           </div>
         </div>
-
         <div className="lottery-grid-full">
           {Object.entries(groupedLotteries).map(([cat, lotteries]) => (
             <div key={cat} className="lottery-category">
@@ -354,9 +341,7 @@ function App() {
               <div className="lottery-row">
                 {lotteries.map(l => (
                   <button key={l.id} className="lottery-card-full" onClick={() => handleSelectLottery(l)}>
-                    <div className="flag-frame">
-                      <img src={l.flag} alt="flag" className="lottery-flag-img" />
-                    </div>
+                    <div className="flag-frame"><img src={l.flag} alt="" className="lottery-flag-img" /></div>
                     <div className="lottery-info">
                       <span className="lottery-name-full">{l.name}</span>
                       <span className="lottery-date-small">{formatDate(new Date().toISOString().split('T')[0])}</span>
@@ -372,9 +357,9 @@ function App() {
     )
   }
 
-  // ──────────────────────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════════════
   // EDITOR PAGE
-  // ──────────────────────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════════════
   return (
     <div className="app-container">
       <input type="file" ref={fileInputRef} onChange={handleImageUpload} accept="image/*" style={{ display: 'none' }} />
@@ -405,9 +390,9 @@ function App() {
           <button className="back-btn" onClick={() => setCurrentPage('select')}>← กลับ</button>
           <h2>⚙ ตั้งค่าโพย</h2>
         </div>
-
         <div className="config-content">
-          {/* Section: ข้อมูลหวย */}
+
+          {/* ── ข้อมูลหวย ── */}
           <div className="config-section">
             <h3 className="section-title">📋 ข้อมูลหวย</h3>
             <div className="input-row">
@@ -418,11 +403,7 @@ function App() {
               <div className="input-group">
                 <label>รูปแบบ</label>
                 <select value={lotteryFormat} onChange={e => setLotteryFormat(e.target.value)} className="modern-input">
-                  <option value="VIP">VIP</option>
-                  <option value="ธรรมดา">ธรรมดา</option>
-                  <option value="พิเศษ">พิเศษ</option>
-                  <option value="STAR">STAR</option>
-                  <option value="HD">HD</option>
+                  {['VIP','ธรรมดา','พิเศษ','STAR','HD'].map(v => <option key={v} value={v}>{v}</option>)}
                 </select>
               </div>
             </div>
@@ -443,7 +424,7 @@ function App() {
             </div>
           </div>
 
-          {/* Section: ตัวเลข */}
+          {/* ── ตัวเลข ── */}
           <div className="config-section">
             <h3 className="section-title">🔢 ตัวเลข</h3>
             <div className="input-group" style={{ marginBottom: 10 }}>
@@ -454,80 +435,67 @@ function App() {
             </div>
             <div className="input-group" style={{ marginBottom: 8 }}>
               <label>เลข 2 ตัว — จำนวน: {twoDigitCount}</label>
-              <input type="range" value={twoDigitCount} onChange={e => setTwoDigitCount(Number(e.target.value))}
-                className="slider" min={1} max={MAX_NUMS} step={1} />
+              <input type="range" value={twoDigitCount} onChange={e => setTwoDigitCount(Number(e.target.value))} className="slider" min={1} max={MAX_NUMS} step={1} />
             </div>
             <div className="number-row-flex">
               {Array.from({ length: twoDigitCount }).map((_, i) => (
-                <input key={i} type="text" value={twoDigitNumbers[i] ?? ''}
-                  onChange={e => updateTwo(i, e.target.value.replace(/\D/g, ''))}
-                  className="number-input" maxLength={2} placeholder="--" />
+                <input key={i} type="text" value={twoDigitNumbers[i] ?? ''} onChange={e => updateTwo(i, e.target.value.replace(/\D/g, ''))} className="number-input" maxLength={2} placeholder="--" />
               ))}
             </div>
             <div className="input-group" style={{ marginBottom: 8, marginTop: 12 }}>
               <label>เลข 3 ตัว — จำนวน: {threeDigitCount}</label>
-              <input type="range" value={threeDigitCount} onChange={e => setThreeDigitCount(Number(e.target.value))}
-                className="slider" min={1} max={MAX_NUMS} step={1} />
+              <input type="range" value={threeDigitCount} onChange={e => setThreeDigitCount(Number(e.target.value))} className="slider" min={1} max={MAX_NUMS} step={1} />
             </div>
             <div className="number-row-flex">
               {Array.from({ length: threeDigitCount }).map((_, i) => (
-                <input key={i} type="text" value={threeDigitNumbers[i] ?? ''}
-                  onChange={e => updateThree(i, e.target.value.replace(/\D/g, ''))}
-                  className="number-input" maxLength={3} placeholder="---" />
+                <input key={i} type="text" value={threeDigitNumbers[i] ?? ''} onChange={e => updateThree(i, e.target.value.replace(/\D/g, ''))} className="number-input" maxLength={3} placeholder="---" />
               ))}
             </div>
-            <button className="btn-action btn-random" style={{ width: '100%', marginTop: 12 }} onClick={randomizeAllNumbers}>
-              🎲 สุ่มเลขทั้งหมด
-            </button>
+            <button className="btn-action btn-random" style={{ width: '100%', marginTop: 12 }} onClick={randomizeAllNumbers}>🎲 สุ่มเลขทั้งหมด</button>
           </div>
 
-          {/* Section: ตำแหน่งตัวเลข */}
+          {/* ── ขนาดโพย (Canva-style presets) ── */}
+          <div className="config-section">
+            <h3 className="section-title">📐 ขนาดโพย</h3>
+            <div className="preset-grid preset-grid-4">
+              {SIZE_PRESETS.map(p => (
+                <button key={p.id} className={`preset-btn ${activeSizePreset === p.id ? 'active' : ''}`}
+                  onClick={() => applySizePreset(p.id)}>
+                  <span className="preset-icon">{p.icon}</span>
+                  <span className="preset-label">{p.label}</span>
+                </button>
+              ))}
+            </div>
+            {activeSizePreset === 'custom' && (
+              <div className="size-input-group" style={{ marginTop: 10 }}>
+                <input type="number" value={posterWidth} onChange={e => setPosterWidth(Number(e.target.value))} className="modern-input" min={200} max={1200} />
+                <span className="size-separator">×</span>
+                <input type="number" value={posterHeight} onChange={e => setPosterHeight(Number(e.target.value))} className="modern-input" min={200} max={1920} />
+              </div>
+            )}
+          </div>
+
+          {/* ── ตำแหน่งตัวเลข (X/Y sliders) ── */}
           <div className="config-section">
             <h3 className="section-title">📐 ตำแหน่งตัวเลข</h3>
-            <div style={{ marginBottom: 14 }}>
-              <label className="input-group" style={{ display: 'block', marginBottom: 8 }}>
-                <span style={{ fontSize: '0.7rem', color: 'rgba(212,175,55,0.75)', letterSpacing: '1.5px', textTransform: 'uppercase' as const }}>เลือกรูปแบบ Layout</span>
-              </label>
-              <div className="preset-grid">
-                {LAYOUT_PRESETS.map(p => (
-                  <button key={p.id} className={`preset-btn ${activePreset === p.id ? 'active' : ''}`}
-                    onClick={() => applyPreset(p.id)}>
-                    <span className="preset-icon">{p.icon}</span>
-                    <span className="preset-label">{p.label}</span>
-                  </button>
-                ))}
-              </div>
+            <div className="pos-group">
+              <label className="pos-label">🔴 เลขเด่น</label>
+              <div className="input-group"><label>X: {promX}%</label><input type="range" value={promX} onChange={e => setPromX(Number(e.target.value))} className="slider" min={10} max={90} step={1} /></div>
+              <div className="input-group"><label>Y: {promY}%</label><input type="range" value={promY} onChange={e => setPromY(Number(e.target.value))} className="slider" min={20} max={80} step={1} /></div>
             </div>
-            <div className="input-group">
-              <label>ตำแหน่ง 2-ตัว: ด้านไหน</label>
-              <div className="toggle-row">
-                <button className={`toggle-btn ${twoDigitSide === 'left' ? 'active' : ''}`} onClick={() => setTwoDigitSide('left')}>◀ ซ้าย</button>
-                <button className={`toggle-btn ${twoDigitSide === 'right' ? 'active' : ''}`} onClick={() => setTwoDigitSide('right')}>ขวา ▶</button>
-              </div>
+            <div className="pos-group">
+              <label className="pos-label">🟡 เลข 2 ตัว</label>
+              <div className="input-group"><label>X: {twoX}%</label><input type="range" value={twoX} onChange={e => setTwoX(Number(e.target.value))} className="slider" min={5} max={95} step={1} /></div>
+              <div className="input-group"><label>Y: {twoY}%</label><input type="range" value={twoY} onChange={e => setTwoY(Number(e.target.value))} className="slider" min={15} max={85} step={1} /></div>
             </div>
-            <div className="input-group">
-              <label>เลขเด่น แนวนอน: {prominentOffsetX}%</label>
-              <input type="range" value={prominentOffsetX} onChange={e => setProminentOffsetX(Number(e.target.value))}
-                className="slider" min={-40} max={40} step={1} />
-            </div>
-            <div className="input-group">
-              <label>เลขเด่น แนวตั้ง: {prominentOffsetY}%</label>
-              <input type="range" value={prominentOffsetY} onChange={e => setProminentOffsetY(Number(e.target.value))}
-                className="slider" min={-30} max={30} step={1} />
-            </div>
-            <div className="input-group">
-              <label>เลข 2-ตัว แนวตั้ง: {twoDigitOffsetY}%</label>
-              <input type="range" value={twoDigitOffsetY} onChange={e => setTwoDigitOffsetY(Number(e.target.value))}
-                className="slider" min={-30} max={30} step={1} />
-            </div>
-            <div className="input-group">
-              <label>เลข 3-ตัว แนวตั้ง: {threeDigitOffsetY}%</label>
-              <input type="range" value={threeDigitOffsetY} onChange={e => setThreeDigitOffsetY(Number(e.target.value))}
-                className="slider" min={-30} max={30} step={1} />
+            <div className="pos-group">
+              <label className="pos-label">🟢 เลข 3 ตัว</label>
+              <div className="input-group"><label>X: {threeX}%</label><input type="range" value={threeX} onChange={e => setThreeX(Number(e.target.value))} className="slider" min={10} max={90} step={1} /></div>
+              <div className="input-group"><label>Y: {threeY}%</label><input type="range" value={threeY} onChange={e => setThreeY(Number(e.target.value))} className="slider" min={40} max={95} step={1} /></div>
             </div>
           </div>
 
-          {/* Section: ฟอนต์ & สไตล์ */}
+          {/* ── ฟอนต์ & สไตล์ ── */}
           <div className="config-section">
             <h3 className="section-title">🔤 ฟอนต์ & สไตล์</h3>
             <div className="input-group">
@@ -554,99 +522,37 @@ function App() {
             </div>
           </div>
 
-          {/* Section: ขนาดตัวเลข */}
+          {/* ── ขนาดตัวเลข ── */}
           <div className="config-section">
             <h3 className="section-title">📏 ขนาดตัวเลข</h3>
-            <div className="input-group">
-              <label>เลขเด่น: {prominentSize} rem</label>
-              <input type="range" value={prominentSize} onChange={e => setProminentSize(Number(e.target.value))}
-                className="slider" min={4} max={12} step={0.5} />
-            </div>
-            <div className="input-group">
-              <label>เลข 2 ตัว: {twoDigitSize} rem</label>
-              <input type="range" value={twoDigitSize} onChange={e => setTwoDigitSize(Number(e.target.value))}
-                className="slider" min={1} max={4} step={0.1} />
-            </div>
-            <div className="input-group">
-              <label>เลข 3 ตัว: {threeDigitSize} rem</label>
-              <input type="range" value={threeDigitSize} onChange={e => setThreeDigitSize(Number(e.target.value))}
-                className="slider" min={1} max={4} step={0.1} />
-            </div>
+            <div className="input-group"><label>เลขเด่น: {prominentSize} rem</label><input type="range" value={prominentSize} onChange={e => setProminentSize(Number(e.target.value))} className="slider" min={4} max={12} step={0.5} /></div>
+            <div className="input-group"><label>เลข 2 ตัว: {twoDigitSize} rem</label><input type="range" value={twoDigitSize} onChange={e => setTwoDigitSize(Number(e.target.value))} className="slider" min={1} max={4} step={0.1} /></div>
+            <div className="input-group"><label>เลข 3 ตัว: {threeDigitSize} rem</label><input type="range" value={threeDigitSize} onChange={e => setThreeDigitSize(Number(e.target.value))} className="slider" min={1} max={4} step={0.1} /></div>
           </div>
 
-          {/* Section: ขนาดโพย */}
-          <div className="config-section">
-            <h3 className="section-title">📐 ขนาดโพย</h3>
-            <div className="input-group">
-              <label>กว้าง × สูง (px)</label>
-              <div className="size-input-group">
-                <input type="number" value={posterWidth}  onChange={e => setPosterWidth(Number(e.target.value))}  className="modern-input" min={250} max={700} />
-                <span className="size-separator">×</span>
-                <input type="number" value={posterHeight} onChange={e => setPosterHeight(Number(e.target.value))} className="modern-input" min={400} max={1000} />
-              </div>
-            </div>
-          </div>
-
-          {/* Section: รูปพื้นหลัง */}
+          {/* ── รูปพื้นหลัง ── */}
           <div className="config-section">
             <h3 className="section-title">🖼 รูปพื้นหลัง</h3>
-            <button className="btn-action btn-preview" style={{ width: '100%', marginBottom: 14 }} onClick={() => fileInputRef.current?.click()}>
-              📂 อัพโหลดรูปพื้นหลัง
-            </button>
-            {backgroundImage && (
-              <button className="btn-action btn-share" style={{ width: '100%', marginBottom: 14 }} onClick={() => setBackgroundImage(null)}>
-                ✕ ลบรูปพื้นหลัง
-              </button>
-            )}
-            <div className="input-group">
-              <label>ซูมรูป: {bgScale}%</label>
-              <input type="range" value={bgScale} onChange={e => setBgScale(Number(e.target.value))}
-                className="slider" min={50} max={300} step={5} />
-            </div>
-            <div className="input-group">
-              <label>ตำแหน่ง แนวนอน: {bgPosX}%</label>
-              <input type="range" value={bgPosX} onChange={e => setBgPosX(Number(e.target.value))}
-                className="slider" min={0} max={100} step={1} />
-            </div>
-            <div className="input-group">
-              <label>ตำแหน่ง แนวตั้ง: {bgPosY}%</label>
-              <input type="range" value={bgPosY} onChange={e => setBgPosY(Number(e.target.value))}
-                className="slider" min={0} max={100} step={1} />
-            </div>
-            <div className="input-group">
-              <label>ความมืดพื้นหลัง: {overlayOpacity}%</label>
-              <input type="range" value={overlayOpacity} onChange={e => setOverlayOpacity(Number(e.target.value))}
-                className="slider" min={0} max={85} step={5} />
-            </div>
+            <button className="btn-action btn-preview" style={{ width: '100%', marginBottom: 14 }} onClick={() => fileInputRef.current?.click()}>📂 อัพโหลดรูปพื้นหลัง</button>
+            {backgroundImage && <button className="btn-action btn-share" style={{ width: '100%', marginBottom: 14 }} onClick={() => setBackgroundImage(null)}>✕ ลบรูปพื้นหลัง</button>}
+            <div className="input-group"><label>ซูมรูป: {bgScale}%</label><input type="range" value={bgScale} onChange={e => setBgScale(Number(e.target.value))} className="slider" min={50} max={300} step={5} /></div>
+            <div className="input-group"><label>ตำแหน่ง แนวนอน: {bgPosX}%</label><input type="range" value={bgPosX} onChange={e => setBgPosX(Number(e.target.value))} className="slider" min={0} max={100} step={1} /></div>
+            <div className="input-group"><label>ตำแหน่ง แนวตั้ง: {bgPosY}%</label><input type="range" value={bgPosY} onChange={e => setBgPosY(Number(e.target.value))} className="slider" min={0} max={100} step={1} /></div>
+            <div className="input-group"><label>ความมืดพื้นหลัง: {overlayOpacity}%</label><input type="range" value={overlayOpacity} onChange={e => setOverlayOpacity(Number(e.target.value))} className="slider" min={0} max={85} step={5} /></div>
           </div>
 
-          {/* Section: โซเชียล */}
+          {/* ── โซเชียล ── */}
           <div className="config-section">
             <h3 className="section-title">💬 โซเชียล</h3>
-            <div className="input-group">
-              <label>Facebook</label>
-              <input type="text" value={facebookName} onChange={e => setFacebookName(e.target.value)} className="modern-input" placeholder="ชื่อเฟส" />
-            </div>
-            <div className="input-group" style={{ marginTop: 8 }}>
-              <label>LINE ID</label>
-              <input type="text" value={lineId} onChange={e => setLineId(e.target.value)} className="modern-input" placeholder="ไอดีไลน์" />
-            </div>
+            <div className="input-group"><label>Facebook</label><input type="text" value={facebookName} onChange={e => setFacebookName(e.target.value)} className="modern-input" placeholder="ชื่อเฟส" /></div>
+            <div className="input-group" style={{ marginTop: 8 }}><label>LINE ID</label><input type="text" value={lineId} onChange={e => setLineId(e.target.value)} className="modern-input" placeholder="ไอดีไลน์" /></div>
           </div>
 
-          {/* Section: ลายน้ำ */}
-          <div className="config-section">
-            <h3 className="section-title">💧 ลายน้ำ</h3>
-            <label className="checkbox-label">
-              <input type="checkbox" checked={showWatermark} onChange={e => setShowWatermark(e.target.checked)} />
-              <span>แสดง Watermark DUMPSC.COM</span>
-            </label>
-          </div>
-
-          {/* Action Buttons */}
+          {/* ── Action Buttons ── */}
           <div className="action-buttons">
-            <button className="btn-action btn-preview"  onClick={() => setShowPreviewModal(true)}>👁 ดูตัวอย่าง</button>
+            <button className="btn-action btn-preview" onClick={() => setShowPreviewModal(true)}>👁 ดูตัวอย่าง</button>
             <button className="btn-action btn-download" onClick={downloadPNG}>⬇ ดาวน์โหลด</button>
-            <button className="btn-action btn-share"    onClick={shareImage}>📤 แชร์</button>
+            <button className="btn-action btn-share" onClick={shareImage}>📤 แชร์</button>
           </div>
         </div>
       </div>
@@ -659,7 +565,7 @@ function App() {
           className="poster"
           ref={posterRef}
           style={{
-            width:  `${posterWidth}px`,
+            width: `${posterWidth}px`,
             height: `${posterHeight}px`,
             backgroundImage: posterBg,
             backgroundSize: backgroundImage ? `${bgScale}%` : 'cover',
@@ -668,119 +574,70 @@ function App() {
             fontFamily: `'${posterFont}', 'Prompt', sans-serif`,
           }}
         >
-          {/* Gold inner frame border */}
           <div className="poster-frame"></div>
+          <div className="poster-overlay" style={{ background: `rgba(0,0,0,${overlayOpacity / 100})` }}></div>
 
-          {/* Dark overlay */}
-          <div className="poster-overlay" style={{
-            background: `rgba(0,0,0,${overlayOpacity / 100})`
-          }}></div>
-
-          {/* DUMPSC Badge — top right */}
+          {/* DUMPSC Badge */}
           <div className="dumpsc-badge">
             <span className="dumpsc-logo">DUMPSC</span>
             <span className="dumpsc-domain">.com</span>
           </div>
 
-          {/* ── HEADER ZONE ── */}
+          {/* Header — always at top */}
           <div className="poster-header">
             <div className="poster-title-text" style={{ color: accentColor }}>หวย</div>
             <div className="poster-lottery-name">{lotteryName}</div>
             <div className="poster-subtitle" style={{ color: accentColor }}>เลขเด็ด</div>
+            <div className="poster-date-pill" style={{ borderColor: accentColor, color: accentColor }}>{formatDate(lotteryDate)}</div>
           </div>
 
-          {/* ── BODY ZONE (prominent + 2-digit) ── */}
-          <div className="poster-body">
-            {/* Date pill */}
-            <div className="poster-date-pill" style={{ borderColor: accentColor, color: accentColor }}>
-              {formatDate(lotteryDate)}
-            </div>
-
-            {/* Prominent number in center */}
-            <div className="prominent-area" style={{
-              transform: `translate(${prominentOffsetX}%, ${prominentOffsetY}%)`,
-            }}>
-              <div className="prominent-ring" style={{
-                width: `${Math.max(prominentSize * 14, 100)}px`,
-                height: `${Math.max(prominentSize * 14, 100)}px`,
-                borderColor: `${accentColor}80`,
-              }}>
-                <div className="prominent-number" style={{
-                  fontSize: `${prominentSize}rem`,
-                  color: accentColor,
-                  textShadow: `0 0 30px ${accentColor}, 0 0 60px ${accentColor}66, 0 4px 8px rgba(0,0,0,0.8)`,
-                }}>
+          {/* Canvas area — all numbers positioned absolutely by % */}
+          <div className="poster-canvas">
+            {/* Prominent */}
+            <div className="canvas-el" style={{ left: `${promX}%`, top: `${promY}%` }}>
+              <div className="prominent-ring" style={{ width: `${Math.max(prominentSize * 14, 100)}px`, height: `${Math.max(prominentSize * 14, 100)}px`, borderColor: `${accentColor}80` }}>
+                <div className="prominent-number" style={{ fontSize: `${prominentSize}rem`, color: accentColor, textShadow: `0 0 30px ${accentColor}, 0 0 60px ${accentColor}66, 0 4px 8px rgba(0,0,0,0.8)` }}>
                   {prominentNumber}
                 </div>
               </div>
               <div className="prominent-label" style={{ color: accentColor }}>เด่น</div>
             </div>
 
-            {/* 2-digit column */}
-            <div className="two-digit-col" style={{
-              [twoDigitSide]: '16px',
-              [twoDigitSide === 'right' ? 'left' : 'right']: 'auto',
-              transform: `translateY(${twoDigitOffsetY}%)`,
-            }}>
-              {displayTwo.map((num, i) => (
-                <div key={i} className={`num-box num-style-${numberStyle}`} style={{
-                  fontSize: `${twoDigitSize}rem`,
-                  borderColor: `${accentColor}55`,
-                  color: accentColor,
-                  textShadow: numberStyle === 'glow' ? `0 0 18px ${accentColor}` : `0 2px 6px rgba(0,0,0,0.9)`,
-                }}>
-                  {num}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── FOOTER ZONE (3-digit + social) ── */}
-          <div className="poster-footer" style={{
-            transform: `translateY(${-threeDigitOffsetY}%)`,
-          }}>
-            <div className="three-digit-row">
-              {displayThree.map((num, i) => (
-                <div key={i} className={`num-box num-box-wide num-style-${numberStyle}`} style={{
-                  fontSize: `${threeDigitSize}rem`,
-                  borderColor: `${accentColor}55`,
-                  color: accentColor,
-                  textShadow: numberStyle === 'glow' ? `0 0 18px ${accentColor}` : `0 2px 6px rgba(0,0,0,0.9)`,
-                }}>
-                  {num}
-                </div>
-              ))}
-            </div>
-
-            {(facebookName || lineId) && (
-              <div className="social-row">
-                {facebookName && (
-                  <div className="social-pill fb">
-                    <span className="social-icon">f</span>
-                    <span>{facebookName}</span>
-                  </div>
-                )}
-                {lineId && (
-                  <div className="social-pill ln">
-                    <span className="social-icon">L</span>
-                    <span>{lineId}</span>
-                  </div>
-                )}
+            {/* 2-digit */}
+            <div className="canvas-el" style={{ left: `${twoX}%`, top: `${twoY}%` }}>
+              <div className="num-col">
+                {displayTwo.map((num, i) => (
+                  <div key={i} className={`num-box num-style-${numberStyle}`} style={{ fontSize: `${twoDigitSize}rem`, borderColor: `${accentColor}55`, color: accentColor, textShadow: numberStyle === 'glow' ? `0 0 18px ${accentColor}` : `0 2px 6px rgba(0,0,0,0.9)` }}>{num}</div>
+                ))}
               </div>
-            )}
+            </div>
+
+            {/* 3-digit */}
+            <div className="canvas-el" style={{ left: `${threeX}%`, top: `${threeY}%` }}>
+              <div className="num-row">
+                {displayThree.map((num, i) => (
+                  <div key={i} className={`num-box num-box-wide num-style-${numberStyle}`} style={{ fontSize: `${threeDigitSize}rem`, borderColor: `${accentColor}55`, color: accentColor, textShadow: numberStyle === 'glow' ? `0 0 18px ${accentColor}` : `0 2px 6px rgba(0,0,0,0.9)` }}>{num}</div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Watermark */}
-          {showWatermark && (
-            <div className="watermark">
-              {[1,2,3,4].map(i => <span key={i}>DUMPSC.COM</span>)}
+          {/* Social footer */}
+          {(facebookName || lineId) && (
+            <div className="poster-social">
+              {facebookName && <div className="social-pill fb"><span className="social-icon">f</span><span>{facebookName}</span></div>}
+              {lineId && <div className="social-pill ln"><span className="social-icon">L</span><span>{lineId}</span></div>}
             </div>
           )}
+
+          {/* Watermark — always on */}
+          <div className="watermark">
+            {[1,2,3,4].map(i => <span key={i}>DUMPSC.COM</span>)}
+          </div>
         </div>
 
-        {/* Quick actions */}
         <div className="poster-actions">
-          <button className="btn-action btn-random"   onClick={randomizeAllNumbers}>🎲 สุ่มเลข</button>
+          <button className="btn-action btn-random" onClick={randomizeAllNumbers}>🎲 สุ่มเลข</button>
           <button className="btn-action btn-download" onClick={downloadPNG}>⬇ ดาวน์โหลด</button>
         </div>
       </div>
