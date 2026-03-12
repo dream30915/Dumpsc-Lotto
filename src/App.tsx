@@ -2,283 +2,369 @@ import { useState, useRef, useCallback } from 'react'
 import html2canvas from 'html2canvas'
 import './App.css'
 
-// Lottery types data with flag images
 const lotteryTypes = [
-  { id: 'lao-vip', name: 'ลาวสตาร์VIP', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao', name: 'ลาวสตาร์', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-abc-vip', name: 'ลาวอับคัสVIP', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-abc', name: 'ลาวอับคัส', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-pad', name: 'ลาวพัฒนา', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-hd', name: 'ลาวHD', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-tv', name: 'ลาวทีวี', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-extra', name: 'ลาวอัดฉั้บ', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-extra-vip', name: 'ลาวอัดฉั้บVIP', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'lao-ruam', name: 'ลาวรวม', flag: 'https://flagcdn.com/w80/la.png', category: 'ลาว' },
-  { id: 'hanoi-special', name: 'ฮานอยพิเศษ', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-  { id: 'hanoi-vip', name: 'ฮานอยวีไอพี', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-  { id: 'hanoi', name: 'ฮานอย', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-  { id: 'hanoi-extra', name: 'ฮานอยอาเซียน', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-  { id: 'hanoi-ruam', name: 'ฮานอยรวม', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-  { id: 'hanoi-ruam-vip', name: 'ฮานอยรวมVIP', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
-  { id: 'thai-ku', name: 'หุ้นไทยเช้า', flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้นไทย' },
-  { id: 'thai-bai', name: 'หุ้นไทยเที่ยง', flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้นไทย' },
-  { id: 'thai-bai2', name: 'หุ้นไทยบ่าย', flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้นไทย' },
-  { id: 'thai-yen', name: 'หุ้นไทยเย็น', flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้นไทย' },
-  { id: 'nikkei-ku', name: 'นิเคอิรอบเช้า', flag: 'https://flagcdn.com/w80/jp.png', category: 'นิเคอิ' },
-  { id: 'nikkei-bai', name: 'นิเคอิรอบบ่าย', flag: 'https://flagcdn.com/w80/jp.png', category: 'นิเคอิ' },
-  { id: 'nikkei-vip', name: 'นิเคอิบ่ายVIP', flag: 'https://flagcdn.com/w80/jp.png', category: 'นิเคอิ' },
-  { id: 'china-vip', name: 'จีนบ่ายVIP', flag: 'https://flagcdn.com/w80/cn.png', category: 'จีน' },
-  { id: 'china-morning', name: 'จีนเช้าVIP', flag: 'https://flagcdn.com/w80/cn.png', category: 'จีน' },
-  { id: 'china', name: 'หุ้นจีน', flag: 'https://flagcdn.com/w80/cn.png', category: 'จีน' },
-  { id: 'dow-vip', name: 'ดาวโจนส์VIP', flag: 'https://flagcdn.com/w80/us.png', category: 'ดาวโจนส์' },
-  { id: 'germany-vip', name: 'เยอรมันVIP', flag: 'https://flagcdn.com/w80/de.png', category: 'เยอรมัน' },
-  { id: 'germany', name: 'หุ้นเยอรมัน', flag: 'https://flagcdn.com/w80/de.png', category: 'เยอรมัน' },
-  { id: 'uk-vip', name: 'อังกฤษVIP', flag: 'https://flagcdn.com/w80/gb.png', category: 'อังกฤษ' },
-  { id: 'uk', name: 'หุ้นอังกฤษ', flag: 'https://flagcdn.com/w80/gb.png', category: 'อังกฤษ' },
-  { id: 'america-vip', name: 'อเมริกาVIP', flag: 'https://flagcdn.com/w80/us.png', category: 'อเมริกา' },
-  { id: 'korea-vip', name: 'เกาหลีVIP', flag: 'https://flagcdn.com/w80/kr.png', category: 'เกาหลี' },
-  { id: 'singapore-vip', name: 'สิงคโปร์VIP', flag: 'https://flagcdn.com/w80/sg.png', category: 'สิงคโปร์' },
-  { id: 'taiwan-vip', name: 'ไต้หวันVIP', flag: 'https://flagcdn.com/w80/tw.png', category: 'ไต้หวัน' },
-  { id: 'russia', name: 'รัฐบาลไทย', flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาล' },
+  // รายวัน
+  { id: 'lao-prachachon', name: 'ประชาชนลาว',   flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'lao-extra',      name: 'ลาวExtra',       flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'hanoi-asian',    name: 'ฮานอยอาเชียน',  flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'lao-tv',         name: 'ลาว TV',         flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'hanoi-hd',       name: 'ฮานอย HD',       flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'hanoi-star',     name: 'ฮานอย สตาร์',   flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'lao-hd',         name: 'ลาว HD',         flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'hanoi-tv',       name: 'ฮานอย TV',       flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'lao-star',       name: 'ลาวสตาร์',      flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'hanoi-redcross', name: 'ฮานอย กาชาด',   flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'hanoi-samak',    name: 'ฮานอยสามัคคี',  flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'hanoi-pattana',  name: 'ฮานอยพัฒนา',    flag: 'https://flagcdn.com/w80/vn.png', category: 'รายวัน' },
+  { id: 'lao-samak',      name: 'ลาวสามัคคี',    flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'lao-asean',      name: 'ลาวอาเซียน',    flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'lao-samak-vip',  name: 'ลาวสามัคคี VIP',flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'uk-vip',         name: 'อังกฤษVIP',     flag: 'https://flagcdn.com/w80/gb.png', category: 'รายวัน' },
+  { id: 'lao-star-vip',   name: 'ลาวSTAR VIP',   flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'malaysia',       name: 'มาเลเซีย',      flag: 'https://flagcdn.com/w80/my.png', category: 'รายวัน' },
+  { id: 'germany-vip',    name: 'เยอรมัน VIP',   flag: 'https://flagcdn.com/w80/de.png', category: 'รายวัน' },
+  { id: 'lao-redcross',   name: 'ลาว กาชาด',     flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'russia-vip',     name: 'รัสเซียVIP',    flag: 'https://flagcdn.com/w80/ru.png', category: 'รายวัน' },
+  { id: 'dow-vip',        name: 'ดาวโจนส์ VIP',  flag: 'https://flagcdn.com/w80/us.png', category: 'รายวัน' },
+  { id: 'dow-star',       name: 'ดาวโจนส์ STAR', flag: 'https://flagcdn.com/w80/us.png', category: 'รายวัน' },
+  { id: 'lao-santipab',   name: 'ลาวสันติภาพ',   flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+  { id: 'lao-patuxay',    name: 'ลาวประตูชัย',   flag: 'https://flagcdn.com/w80/la.png', category: 'รายวัน' },
+
+  // รัฐบาลไทย
+  { id: 'thai-gov', name: 'รัฐบาลไทย', flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาลไทย' },
+  { id: 'omsin',    name: 'ออมสิน',    flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาลไทย' },
+  { id: 'baac',     name: 'ธ.ก.ส',     flag: 'https://flagcdn.com/w80/th.png', category: 'รัฐบาลไทย' },
+
+  // ฮานอย
+  { id: 'hanoi',        name: 'ฮานอย',       flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
+  { id: 'hanoi-sp',     name: 'ฮานอยพิเศษ',  flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
+  { id: 'hanoi-normal', name: 'ฮานอยปกติ',   flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
+  { id: 'hanoi-vip',    name: 'ฮานอย VIP',   flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
+  { id: 'hanoi-bundle', name: 'ฮานอยมัดรวม', flag: 'https://flagcdn.com/w80/vn.png', category: 'ฮานอย' },
+
+  // ต่างประเทศ
+  { id: 'lao-pattana',     name: 'ลาวพัฒนา',     flag: 'https://flagcdn.com/w80/la.png', category: 'ต่างประเทศ' },
+  { id: 'hanoi-foreign',   name: 'ฮานอย',        flag: 'https://flagcdn.com/w80/vn.png', category: 'ต่างประเทศ' },
+  { id: 'hanoi-special-f', name: 'ฮานอยพิเศษ',   flag: 'https://flagcdn.com/w80/vn.png', category: 'ต่างประเทศ' },
+  { id: 'china-f',         name: 'จีน',           flag: 'https://flagcdn.com/w80/cn.png', category: 'ต่างประเทศ' },
+  { id: 'singapore-f',     name: 'สิงคโปร์',      flag: 'https://flagcdn.com/w80/sg.png', category: 'ต่างประเทศ' },
+  { id: 'malaysia-f',      name: 'มาเลเซีย',     flag: 'https://flagcdn.com/w80/my.png', category: 'ต่างประเทศ' },
+
+  // หุ้น
+  { id: 'thai-morning',       name: 'หุ้นไทยเช้า',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น' },
+  { id: 'thai-noon',          name: 'หุ้นไทยเที่ยง',     flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น' },
+  { id: 'thai-afternoon',     name: 'หุ้นไทยบ่าย',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น' },
+  { id: 'thai-evening',       name: 'หุ้นไทยเย็น',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น' },
+  { id: 'nikkei-morning',     name: 'หุ้นนิเคอิเช้า',    flag: 'https://flagcdn.com/w80/jp.png', category: 'หุ้น' },
+  { id: 'nikkei-afternoon',   name: 'หุ้นนิเคอิบ่าย',   flag: 'https://flagcdn.com/w80/jp.png', category: 'หุ้น' },
+  { id: 'china-morning',      name: 'หุ้นจีนเช้า',       flag: 'https://flagcdn.com/w80/cn.png', category: 'หุ้น' },
+  { id: 'china-afternoon',    name: 'หุ้นจีนบ่าย',       flag: 'https://flagcdn.com/w80/cn.png', category: 'หุ้น' },
+  { id: 'hangseng-morning',   name: 'หุ้นฮั้งเส็งเช้า',  flag: 'https://flagcdn.com/w80/hk.png', category: 'หุ้น' },
+  { id: 'hangseng-afternoon', name: 'หุ้นฮั้งเส็งบ่าย',  flag: 'https://flagcdn.com/w80/hk.png', category: 'หุ้น' },
+  { id: 'taiwan',             name: 'หุ้นไต้หวัน',       flag: 'https://flagcdn.com/w80/tw.png', category: 'หุ้น' },
+  { id: 'korea',              name: 'หุ้นเกาหลี',        flag: 'https://flagcdn.com/w80/kr.png', category: 'หุ้น' },
+  { id: 'singapore',          name: 'หุ้นสิงค์โปร์',     flag: 'https://flagcdn.com/w80/sg.png', category: 'หุ้น' },
+  { id: 'egypt',              name: 'หุ้นอียิปต์',       flag: 'https://flagcdn.com/w80/eg.png', category: 'หุ้น' },
+  { id: 'india',              name: 'หุ้นอินเดีย',       flag: 'https://flagcdn.com/w80/in.png', category: 'หุ้น' },
+  { id: 'germany',            name: 'หุ้นเยอรมัน',       flag: 'https://flagcdn.com/w80/de.png', category: 'หุ้น' },
+  { id: 'russia',             name: 'หุ้นรัสเซีย',       flag: 'https://flagcdn.com/w80/ru.png', category: 'หุ้น' },
+  { id: 'uk',                 name: 'หุ้นอังกฤษ',        flag: 'https://flagcdn.com/w80/gb.png', category: 'หุ้น' },
+  { id: 'dowjones',           name: 'หุ้นดาวโจนส์',      flag: 'https://flagcdn.com/w80/us.png', category: 'หุ้น' },
+
+  // หุ้น VIP
+  { id: 'thai-morning-vip',       name: 'หุ้นไทยเช้า VIP',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น VIP' },
+  { id: 'thai-evening-vip',       name: 'หุ้นไทยเย็น VIP',       flag: 'https://flagcdn.com/w80/th.png', category: 'หุ้น VIP' },
+  { id: 'nikkei-morning-vip',     name: 'หุ้นนิเคอิ(เช้า) VIP',   flag: 'https://flagcdn.com/w80/jp.png', category: 'หุ้น VIP' },
+  { id: 'nikkei-afternoon-vip',   name: 'หุ้นนิเคอิ(บ่าย) VIP',   flag: 'https://flagcdn.com/w80/jp.png', category: 'หุ้น VIP' },
+  { id: 'china-morning-vip',      name: 'หุ้นจีน(เช้า) VIP',      flag: 'https://flagcdn.com/w80/cn.png', category: 'หุ้น VIP' },
+  { id: 'china-afternoon-vip',    name: 'หุ้นจีน(บ่าย) VIP',      flag: 'https://flagcdn.com/w80/cn.png', category: 'หุ้น VIP' },
+  { id: 'hangseng-morning-vip',   name: 'หุ้นฮั้งเส็ง(เช้า) VIP', flag: 'https://flagcdn.com/w80/hk.png', category: 'หุ้น VIP' },
+  { id: 'hangseng-afternoon-vip', name: 'หุ้นฮั้งเส็ง(บ่าย) VIP', flag: 'https://flagcdn.com/w80/hk.png', category: 'หุ้น VIP' },
+  { id: 'taiwan-vip',             name: 'หุ้นไต้หวัน VIP',        flag: 'https://flagcdn.com/w80/tw.png', category: 'หุ้น VIP' },
+  { id: 'korea-vip',              name: 'หุ้นเกาหลี VIP',         flag: 'https://flagcdn.com/w80/kr.png', category: 'หุ้น VIP' },
+  { id: 'singapore-vip',          name: 'หุ้นสิงค์โปร์ VIP',      flag: 'https://flagcdn.com/w80/sg.png', category: 'หุ้น VIP' },
+  { id: 'india-vip',              name: 'หุ้นอินเดีย VIP',         flag: 'https://flagcdn.com/w80/in.png', category: 'หุ้น VIP' },
+  { id: 'germany-vip-s',          name: 'หุ้นเยอรมัน VIP',        flag: 'https://flagcdn.com/w80/de.png', category: 'หุ้น VIP' },
+  { id: 'russia-vip-s',           name: 'หุ้นรัสเซีย VIP',        flag: 'https://flagcdn.com/w80/ru.png', category: 'หุ้น VIP' },
+  { id: 'uk-vip-s',               name: 'หุ้นอังกฤษ VIP',         flag: 'https://flagcdn.com/w80/gb.png', category: 'หุ้น VIP' },
+  { id: 'dowjones-vip-s',         name: 'หุ้นดาวโจนส์ VIP',       flag: 'https://flagcdn.com/w80/us.png', category: 'หุ้น VIP' },
+
+  // พิเศษ
+  { id: 'hanoi-noon',    name: 'ฮานอยเที่ยง', flag: 'https://flagcdn.com/w80/vn.png', category: 'พิเศษ' },
+  { id: 'lao-special',   name: 'ลาวพิเศษ',    flag: 'https://flagcdn.com/w80/la.png', category: 'พิเศษ' },
+  { id: 'lao-vip',       name: 'ลาวVIP',       flag: 'https://flagcdn.com/w80/la.png', category: 'พิเศษ' },
+  { id: 'lao-viangchan', name: 'ลาวเวียงจัน', flag: 'https://flagcdn.com/w80/la.png', category: 'พิเศษ' },
+
+  // อื่นๆ
+  { id: 'hanoi-extra', name: 'ฮานอย EXTRA',   flag: 'https://flagcdn.com/w80/vn.png', category: 'อื่นๆ' },
+  { id: 'hanoi-cny',   name: 'ฮานอยตรุษจีน', flag: 'https://flagcdn.com/w80/vn.png', category: 'อื่นๆ' },
 ]
 
+const LAYOUT_PRESETS = [
+  { id: 'classic',  label: 'คลาสสิก',  icon: '⊞', twoSide: 'right', promOX: -8,  promOY: 0,   twoOY: 0,   threeOY: 0  },
+  { id: 'center',   label: 'กลาง',     icon: '⊡', twoSide: 'right', promOX: 0,   promOY: 0,   twoOY: 0,   threeOY: 0  },
+  { id: 'left',     label: 'เลขซ้าย',  icon: '◧', twoSide: 'left',  promOX: 12,  promOY: 0,   twoOY: 0,   threeOY: 0  },
+  { id: 'high',     label: 'เลขบน',    icon: '↑', twoSide: 'right', promOX: 0,   promOY: -8,  twoOY: -8,  threeOY: 0  },
+  { id: 'low',      label: 'เลขล่าง',  icon: '↓', twoSide: 'right', promOX: 0,   promOY: 8,   twoOY: 8,   threeOY: 0  },
+  { id: 'split',    label: 'แยกซ้าย',  icon: '⊟', twoSide: 'left',  promOX: -5,  promOY: -5,  twoOY: 0,   threeOY: 0  },
+] as const
+
+const FONTS = [
+  { value: 'Prompt',          label: 'Prompt (ค่าเริ่มต้น)' },
+  { value: 'Sarabun',         label: 'Sarabun' },
+  { value: 'Kanit',           label: 'Kanit' },
+  { value: 'Mitr',            label: 'Mitr' },
+  { value: 'Noto Serif Thai', label: 'Noto Serif Thai' },
+  { value: 'IBM Plex Sans Thai', label: 'IBM Plex Sans Thai' },
+  { value: 'Cinzel',          label: 'Cinzel (Roman)' },
+]
+
+const ACCENT_COLORS = [
+  { value: '#D4AF37', label: '🟡 Imperial Gold' },
+  { value: '#FFD700', label: '🌕 Bright Gold' },
+  { value: '#FF4444', label: '🔴 Crimson Red' },
+  { value: '#00C9FF', label: '🔵 Sky Blue' },
+  { value: '#00FF88', label: '🟢 Jade Green' },
+  { value: '#FF69B4', label: '🌸 Pink' },
+  { value: '#FFFFFF', label: '⬜ White' },
+]
+
+const NUMBER_STYLES = [
+  { value: 'box',     label: 'กล่อง (Box)' },
+  { value: 'outline', label: 'กรอบ (Outline)' },
+  { value: 'glow',    label: 'เรืองแสง (Glow)' },
+  { value: 'badge',   label: 'แบดจ์ (Badge)' },
+  { value: 'plain',   label: 'ตัวเปล่า (Plain)' },
+]
+
+const MAX_NUMS = 5
+
 function App() {
-  // Page state
   const [currentPage, setCurrentPage] = useState<'select' | 'editor'>('select')
 
-  // Form state
-  const [lotteryName, setLotteryName] = useState('ลาวสตาร์VIP')
+  const [lotteryName,   setLotteryName]   = useState('ลาวสตาร์VIP')
   const [lotteryFormat, setLotteryFormat] = useState('VIP')
-  const [lotteryDate, setLotteryDate] = useState(() => {
-    const today = new Date()
-    return today.toISOString().split('T')[0]
-  })
-  const [seed, setSeed] = useState('322215')
-  const [prominentNumber, setProminentNumber] = useState('7')
-  const [twoDigitNumbers, setTwoDigitNumbers] = useState(['02', '68', '45'])
-  const [threeDigitNumbers, setThreeDigitNumbers] = useState(['402', '936', ''])
+  const [lotteryDate,   setLotteryDate]   = useState(() => new Date().toISOString().split('T')[0])
+  const [seed,          setSeed]          = useState('322215')
+
+  const [prominentNumber,  setProminentNumber]  = useState('7')
+  const [twoDigitNumbers,  setTwoDigitNumbers]  = useState<string[]>(['02', '68', '45', '', ''])
+  const [threeDigitNumbers,setThreeDigitNumbers] = useState<string[]>(['402', '936', '', '', ''])
+  const [twoDigitCount,    setTwoDigitCount]    = useState(3)
+  const [threeDigitCount,  setThreeDigitCount]  = useState(2)
+
   const [facebookName, setFacebookName] = useState('')
-  const [lineId, setLineId] = useState('')
-  const [showWatermark, setShowWatermark] = useState(true)
+  const [lineId,       setLineId]       = useState('')
+  const [showWatermark,setShowWatermark] = useState(true)
+
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null)
+  const [bgScale,  setBgScale]  = useState(100)
+  const [bgPosX,   setBgPosX]   = useState(50)
+  const [bgPosY,   setBgPosY]   = useState(50)
+  const [overlayOpacity, setOverlayOpacity] = useState(30)
 
-  // Modal state
+  const [posterWidth,  setPosterWidth]  = useState(400)
+  const [posterHeight, setPosterHeight] = useState(700)
+
+  const [prominentSize,  setProminentSize]  = useState(7)
+  const [twoDigitSize,   setTwoDigitSize]   = useState(2.2)
+  const [threeDigitSize, setThreeDigitSize] = useState(2.2)
+
+  const [activePreset,      setActivePreset]      = useState('classic')
+  const [twoDigitSide,      setTwoDigitSide]      = useState<'left' | 'right'>('right')
+  const [prominentOffsetX,  setProminentOffsetX]  = useState(-8)
+  const [prominentOffsetY,  setProminentOffsetY]  = useState(0)
+  const [twoDigitOffsetY,   setTwoDigitOffsetY]   = useState(0)
+  const [threeDigitOffsetY, setThreeDigitOffsetY] = useState(0)
+
+  const [posterFont,  setPosterFont]  = useState('Prompt')
+  const [numberStyle, setNumberStyle] = useState('box')
+  const [accentColor, setAccentColor] = useState('#D4AF37')
+
   const [showPreviewModal, setShowPreviewModal] = useState(false)
-  const [previewFormat, setPreviewFormat] = useState<'full' | 'png'>('full')
+  const [previewFormat,    setPreviewFormat]    = useState<'full' | 'png'>('full')
 
-  // Refs
-  const posterRef = useRef<HTMLDivElement>(null)
+  const posterRef    = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Random generators
-  const generateRandomNumber = (min: number, max: number): string => {
-    return Math.floor(Math.random() * (max - min + 1) + min).toString()
-  }
+  const rand = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1) + min).toString()
+  const randTwo   = () => rand(10, 99).padStart(2, '0')
+  const randThree = () => rand(100, 999)
+  const randOne   = () => rand(0, 9)
 
-  const generateTwoDigitNumber = (): string => {
-    return generateRandomNumber(10, 99).padStart(2, '0')
-  }
-
-  const generateThreeDigitNumber = (): string => {
-    return generateRandomNumber(100, 999)
-  }
-
-  const generateSingleDigit = (): string => {
-    return generateRandomNumber(0, 9)
-  }
-
-  // Random all numbers
   const randomizeAllNumbers = () => {
-    setProminentNumber(generateSingleDigit())
-    setTwoDigitNumbers([
-      generateTwoDigitNumber(),
-      generateTwoDigitNumber(),
-      generateTwoDigitNumber()
-    ])
-    setThreeDigitNumbers([
-      generateThreeDigitNumber(),
-      generateThreeDigitNumber(),
-      generateThreeDigitNumber()
-    ])
-    setSeed(generateRandomNumber(100000, 999999))
+    setProminentNumber(randOne())
+    setTwoDigitNumbers(Array.from({ length: MAX_NUMS }, (_, i) =>
+      i < twoDigitCount ? randTwo() : ''))
+    setThreeDigitNumbers(Array.from({ length: MAX_NUMS }, (_, i) =>
+      i < threeDigitCount ? randThree() : ''))
+    setSeed(rand(100000, 999999))
   }
 
-  // Random date
   const randomizeDate = () => {
-    const start = new Date(2024, 0, 1)
-    const end = new Date(2025, 11, 31)
-    const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
-    setLotteryDate(randomDate.toISOString().split('T')[0])
+    const s = new Date(2024, 0, 1), e = new Date(2026, 11, 31)
+    const d = new Date(s.getTime() + Math.random() * (e.getTime() - s.getTime()))
+    setLotteryDate(d.toISOString().split('T')[0])
   }
 
-  // Random seed
-  const randomizeSeed = () => {
-    setSeed(generateRandomNumber(100000, 999999))
+  const setToday = () => setLotteryDate(new Date().toISOString().split('T')[0])
+
+  const applyPreset = (id: string) => {
+    const p = LAYOUT_PRESETS.find(x => x.id === id)
+    if (!p) return
+    setActivePreset(id)
+    setTwoDigitSide(p.twoSide as 'left' | 'right')
+    setProminentOffsetX(p.promOX)
+    setProminentOffsetY(p.promOY)
+    setTwoDigitOffsetY(p.twoOY)
+    setThreeDigitOffsetY(p.threeOY)
   }
 
-  // Set today
-  const setToday = () => {
-    const today = new Date()
-    setLotteryDate(today.toISOString().split('T')[0])
-  }
-
-  // Handle lottery selection
-  const handleSelectLottery = (lottery: typeof lotteryTypes[0]) => {
-    setLotteryName(lottery.name)
+  const handleSelectLottery = (l: typeof lotteryTypes[0]) => {
+    setLotteryName(l.name)
     setCurrentPage('editor')
   }
 
-  // Handle background image upload
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setBackgroundImage(e.target?.result as string)
-      }
-      reader.readAsDataURL(file)
-    }
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const r = new FileReader()
+    r.onload = ev => setBackgroundImage(ev.target?.result as string)
+    r.readAsDataURL(file)
   }
 
-  // Change background image
-  const changeBackground = () => {
-    fileInputRef.current?.click()
+  const updateTwo   = (i: number, v: string) => {
+    const a = [...twoDigitNumbers]; a[i] = v.slice(0, 2); setTwoDigitNumbers(a)
+  }
+  const updateThree = (i: number, v: string) => {
+    const a = [...threeDigitNumbers]; a[i] = v.slice(0, 3); setThreeDigitNumbers(a)
   }
 
-  // Update two digit number
-  const updateTwoDigitNumber = (index: number, value: string) => {
-    const newNumbers = [...twoDigitNumbers]
-    newNumbers[index] = value.slice(0, 2)
-    setTwoDigitNumbers(newNumbers)
+  const formatDate = (s: string) => {
+    if (!s) return ''
+    const [y, m, d] = s.split('-')
+    return `${d}/${m}/${(parseInt(y) + 543).toString().slice(2)}`
   }
 
-  // Update three digit number
-  const updateThreeDigitNumber = (index: number, value: string) => {
-    const newNumbers = [...threeDigitNumbers]
-    newNumbers[index] = value.slice(0, 3)
-    setThreeDigitNumbers(newNumbers)
+  const capturePoster = async () => {
+    if (!posterRef.current) return null
+    return html2canvas(posterRef.current, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+    })
   }
 
-  // Format date for display
-  const formatDate = (dateStr: string) => {
-    if (!dateStr) return ''
-    const [year, month, day] = dateStr.split('-')
-    const thaiYear = parseInt(year) + 543
-    return `${day}/${month}/${thaiYear.toString().slice(2)}`
-  }
-
-  // Download PNG
   const downloadPNG = useCallback(async () => {
-    if (posterRef.current) {
-      try {
-        const canvas = await html2canvas(posterRef.current, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: null
-        })
-        
-        const link = document.createElement('a')
-        link.download = `huay_poster_${lotteryName}_${lotteryDate}.png`
-        link.href = canvas.toDataURL('image/png')
-        link.click()
-      } catch (error) {
-        console.error('Error saving poster:', error)
-        alert('เกิดข้อผิดพลาดในการบันทึกรูปภาพ')
-      }
-    }
+    try {
+      const c = await capturePoster()
+      if (!c) return
+      const a = document.createElement('a')
+      a.download = `dumpsc_${lotteryName}_${lotteryDate}.png`
+      a.href = c.toDataURL('image/png')
+      a.click()
+    } catch { alert('เกิดข้อผิดพลาดในการบันทึกรูปภาพ') }
   }, [lotteryName, lotteryDate])
 
-  // Share image
   const shareImage = useCallback(async () => {
-    if (posterRef.current) {
-      try {
-        const canvas = await html2canvas(posterRef.current, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: null
-        })
-        
-        const imageUrl = canvas.toDataURL('image/png')
-        const newWindow = window.open()
-        if (newWindow) {
-          newWindow.document.write(`
-            <html>
-              <head>
-                <title>แชร์รูปภาพ - ${lotteryName}</title>
-                <style>
-                  body {
-                    margin: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100vh;
-                    background: #1a1a2e;
-                  }
-                  img {
-                    max-width: 100%;
-                    max-height: 100vh;
-                    object-fit: contain;
-                  }
-                </style>
-              </head>
-              <body>
-                <img src="${imageUrl}" alt="Lottery Poster">
-              </body>
-            </html>
-          `)
-        }
-      } catch (error) {
-        console.error('Error sharing poster:', error)
-      }
-    }
+    try {
+      const c = await capturePoster()
+      if (!c) return
+      const w = window.open()
+      if (w) w.document.write(`
+        <html><head><title>${lotteryName}</title>
+        <style>body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0a0000}
+        img{max-width:100%;max-height:100vh;object-fit:contain}</style></head>
+        <body><img src="${c.toDataURL('image/png')}"></body></html>`)
+    } catch {}
   }, [lotteryName])
 
-  // Preview with format
-  const handlePreview = () => {
-    setShowPreviewModal(true)
-  }
+  const confirmPreview = () => { setShowPreviewModal(false); shareImage() }
 
-  // Confirm preview
-  const confirmPreview = () => {
-    setShowPreviewModal(false)
-    shareImage()
-  }
-
-  // Group lottery types by category
-  const groupedLotteries = lotteryTypes.reduce((acc, lottery) => {
-    if (!acc[lottery.category]) {
-      acc[lottery.category] = []
-    }
-    acc[lottery.category].push(lottery)
+  const groupedLotteries = lotteryTypes.reduce((acc, l) => {
+    if (!acc[l.category]) acc[l.category] = []
+    acc[l.category].push(l)
     return acc
   }, {} as Record<string, typeof lotteryTypes>)
 
-  // Lottery Selection Page
+  const displayTwo   = twoDigitNumbers.slice(0, twoDigitCount).filter(n => n)
+  const displayThree = threeDigitNumbers.slice(0, threeDigitCount).filter(n => n)
+
+  const posterBg = backgroundImage
+    ? `url(${backgroundImage})`
+    : `linear-gradient(160deg, #3d0000 0%, #1e0000 30%, #0a0000 65%, #1e0000 100%)`
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // SELECT PAGE
+  // ──────────────────────────────────────────────────────────────────────────
   if (currentPage === 'select') {
     return (
       <div className="select-page">
+        <div className="imperial-bg-overlay"></div>
+
         <div className="select-header">
-          <h1>DUMPSCจัดให้</h1>
-          <div className="header-badge">ทีเด็ด7โกรก</div>
+          <div className="header-container">
+            <span className="corner-rune tl">◈</span>
+            <span className="corner-rune tr">◈</span>
+            <span className="corner-rune bl">◈</span>
+            <span className="corner-rune br">◈</span>
+
+            <div className="dragon-side">
+              <span className="dragon-icon dragon-left">🐉</span>
+            </div>
+
+            <div className="header-inner">
+              <div className="header-ornament top">
+                <span className="ornament-gem">◆</span>
+                <span className="ornament-bar"></span>
+                <span className="ornament-gem">✦</span>
+                <span className="ornament-bar"></span>
+                <span className="ornament-gem">◆</span>
+              </div>
+              <h1>DUMPSC จัดให้</h1>
+              <p className="header-subtitle">โปรแกรมทำนายหวยอัตโนมัติ</p>
+              <div className="header-badge">⚜ ทีเด็ดหวยทุกงวด ⚜</div>
+              <div className="header-ornament bottom">
+                <span className="ornament-gem">◆</span>
+                <span className="ornament-bar"></span>
+                <span className="ornament-gem">✦</span>
+                <span className="ornament-bar"></span>
+                <span className="ornament-gem">◆</span>
+              </div>
+            </div>
+
+            <div className="dragon-side">
+              <span className="dragon-icon dragon-right">🐉</span>
+            </div>
+          </div>
         </div>
+
         <div className="lottery-grid-full">
-          {Object.entries(groupedLotteries).map(([category, lotteries]) => (
-            <div key={category} className="lottery-row">
-              {lotteries.map((lottery) => (
-                <button
-                  key={lottery.id}
-                  className="lottery-card-full"
-                  onClick={() => handleSelectLottery(lottery)}
-                >
-                  <img src={lottery.flag} alt="flag" className="lottery-flag-img" />
-                  <div className="lottery-info">
-                    <span className="lottery-name-full">{lottery.name}</span>
-                    <span className="lottery-date-small">{formatDate(new Date().toISOString().split('T')[0])}</span>
-                  </div>
-                </button>
-              ))}
+          {Object.entries(groupedLotteries).map(([cat, lotteries]) => (
+            <div key={cat} className="lottery-category">
+              <div className="category-header">
+                <span className="category-ornament">⚜</span>
+                <span className="category-divider-line"></span>
+                <h2 className="category-title">{cat}</h2>
+                <span className="category-divider-line"></span>
+                <span className="category-ornament">⚜</span>
+              </div>
+              <div className="lottery-row">
+                {lotteries.map(l => (
+                  <button key={l.id} className="lottery-card-full" onClick={() => handleSelectLottery(l)}>
+                    <div className="flag-frame">
+                      <img src={l.flag} alt="flag" className="lottery-flag-img" />
+                    </div>
+                    <div className="lottery-info">
+                      <span className="lottery-name-full">{l.name}</span>
+                      <span className="lottery-date-small">{formatDate(new Date().toISOString().split('T')[0])}</span>
+                    </div>
+                    <span className="card-arrow">›</span>
+                  </button>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -286,302 +372,417 @@ function App() {
     )
   }
 
-  // Editor Page
+  // ──────────────────────────────────────────────────────────────────────────
+  // EDITOR PAGE
+  // ──────────────────────────────────────────────────────────────────────────
   return (
     <div className="app-container">
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageUpload}
-        accept="image/*"
-        style={{ display: 'none' }}
-      />
+      <input type="file" ref={fileInputRef} onChange={handleImageUpload} accept="image/*" style={{ display: 'none' }} />
 
-      {/* Preview Modal */}
       {showPreviewModal && (
         <div className="modal-overlay" onClick={() => setShowPreviewModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>เลือกรูปแบบที่จะดูตัวอย่าง</h3>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h3>⚜ เลือกรูปแบบ ⚜</h3>
             <div className="format-options">
-              <label className={`format-option ${previewFormat === 'full' ? 'selected' : ''}`}>
-                <input
-                  type="radio"
-                  name="format"
-                  value="full"
-                  checked={previewFormat === 'full'}
-                  onChange={() => setPreviewFormat('full')}
-                />
-                <span>รูปเต็มตัว</span>
-              </label>
-              <label className={`format-option ${previewFormat === 'png' ? 'selected' : ''}`}>
-                <input
-                  type="radio"
-                  name="format"
-                  value="png"
-                  checked={previewFormat === 'png'}
-                  onChange={() => setPreviewFormat('png')}
-                />
-                <span>PNG (ไม่มีพื้นหลัง)</span>
-              </label>
+              {(['full', 'png'] as const).map(v => (
+                <label key={v} className={`format-option ${previewFormat === v ? 'selected' : ''}`}>
+                  <input type="radio" name="fmt" value={v} checked={previewFormat === v} onChange={() => setPreviewFormat(v)} />
+                  <span>{v === 'full' ? 'รูปเต็มตัว' : 'PNG (ไม่มีพื้นหลัง)'}</span>
+                </label>
+              ))}
             </div>
             <div className="modal-buttons">
-              <button className="btn-cancel" onClick={() => setShowPreviewModal(false)}>
-                ยกเลิก
-              </button>
-              <button className="btn-confirm" onClick={confirmPreview}>
-                ตกลง
-              </button>
+              <button className="btn-cancel" onClick={() => setShowPreviewModal(false)}>ยกเลิก</button>
+              <button className="btn-confirm" onClick={confirmPreview}>ตกลง</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Config Panel */}
+      {/* CONFIG PANEL */}
       <div className="config-panel">
         <div className="config-header">
-          <button className="back-btn" onClick={() => setCurrentPage('select')}>
-            ← กลับไปเลือกหวย
-          </button>
-          <h2>ตั้งค่า</h2>
+          <button className="back-btn" onClick={() => setCurrentPage('select')}>← กลับ</button>
+          <h2>⚙ ตั้งค่าโพย</h2>
         </div>
 
         <div className="config-content">
-          {/* Lottery Info */}
+          {/* Section: ข้อมูลหวย */}
           <div className="config-section">
+            <h3 className="section-title">📋 ข้อมูลหวย</h3>
             <div className="input-row">
               <div className="input-group">
                 <label>ชื่อหวย</label>
-                <input
-                  type="text"
-                  value={lotteryName}
-                  onChange={(e) => setLotteryName(e.target.value)}
-                  className="modern-input"
-                />
+                <input type="text" value={lotteryName} onChange={e => setLotteryName(e.target.value)} className="modern-input" />
               </div>
               <div className="input-group">
                 <label>รูปแบบ</label>
-                <select
-                  value={lotteryFormat}
-                  onChange={(e) => setLotteryFormat(e.target.value)}
-                  className="modern-input"
-                >
+                <select value={lotteryFormat} onChange={e => setLotteryFormat(e.target.value)} className="modern-input">
                   <option value="VIP">VIP</option>
                   <option value="ธรรมดา">ธรรมดา</option>
                   <option value="พิเศษ">พิเศษ</option>
+                  <option value="STAR">STAR</option>
+                  <option value="HD">HD</option>
                 </select>
               </div>
             </div>
-
-            <div className="input-row">
-              <div className="input-group">
-                <label>วันที่</label>
-                <div className="date-input-group">
-                  <input
-                    type="date"
-                    value={lotteryDate}
-                    onChange={(e) => setLotteryDate(e.target.value)}
-                    className="modern-input"
-                  />
-                  <button className="small-btn" onClick={randomizeDate}>ลบวัน</button>
-                  <button className="small-btn" onClick={setToday}>บวกวัน</button>
-                </div>
+            <div className="input-group">
+              <label>วันที่</label>
+              <div className="date-input-group">
+                <input type="date" value={lotteryDate} onChange={e => setLotteryDate(e.target.value)} className="modern-input" />
+                <button className="small-btn" onClick={randomizeDate}>สุ่มวัน</button>
+                <button className="small-btn" onClick={setToday}>วันนี้</button>
               </div>
             </div>
-
-            <div className="input-group">
+            <div className="input-group" style={{ marginTop: 8 }}>
               <label>Seed (n)</label>
-              <div className="seed-input-group" style={{ display: 'flex', gap: '8px' }}>
-                <input
-                  type="text"
-                  value={seed}
-                  onChange={(e) => setSeed(e.target.value)}
-                  className="modern-input"
-                  style={{ flex: 1 }}
-                />
-                <button className="small-btn" onClick={randomizeSeed}>สุ่ม Seed</button>
+              <div className="date-input-group">
+                <input type="text" value={seed} onChange={e => setSeed(e.target.value)} className="modern-input" style={{ flex: 1 }} />
+                <button className="small-btn" onClick={() => setSeed(rand(100000, 999999))}>สุ่ม</button>
               </div>
             </div>
           </div>
 
-          {/* Numbers */}
+          {/* Section: ตัวเลข */}
           <div className="config-section">
-            <div className="number-row">
-              <div className="input-group">
-                <label>เด่น</label>
-                <input
-                  type="text"
-                  value={prominentNumber}
-                  onChange={(e) => setProminentNumber(e.target.value.slice(0, 1))}
-                  className="number-input"
-                  maxLength={1}
-                />
+            <h3 className="section-title">🔢 ตัวเลข</h3>
+            <div className="input-group" style={{ marginBottom: 10 }}>
+              <label>เลขเด่น (1 ตัว)</label>
+              <input type="text" value={prominentNumber}
+                onChange={e => setProminentNumber(e.target.value.replace(/\D/g, '').slice(0, 1))}
+                className="number-input" maxLength={1} style={{ maxWidth: 80, textAlign: 'center' }} />
+            </div>
+            <div className="input-group" style={{ marginBottom: 8 }}>
+              <label>เลข 2 ตัว — จำนวน: {twoDigitCount}</label>
+              <input type="range" value={twoDigitCount} onChange={e => setTwoDigitCount(Number(e.target.value))}
+                className="slider" min={1} max={MAX_NUMS} step={1} />
+            </div>
+            <div className="number-row-flex">
+              {Array.from({ length: twoDigitCount }).map((_, i) => (
+                <input key={i} type="text" value={twoDigitNumbers[i] ?? ''}
+                  onChange={e => updateTwo(i, e.target.value.replace(/\D/g, ''))}
+                  className="number-input" maxLength={2} placeholder="--" />
+              ))}
+            </div>
+            <div className="input-group" style={{ marginBottom: 8, marginTop: 12 }}>
+              <label>เลข 3 ตัว — จำนวน: {threeDigitCount}</label>
+              <input type="range" value={threeDigitCount} onChange={e => setThreeDigitCount(Number(e.target.value))}
+                className="slider" min={1} max={MAX_NUMS} step={1} />
+            </div>
+            <div className="number-row-flex">
+              {Array.from({ length: threeDigitCount }).map((_, i) => (
+                <input key={i} type="text" value={threeDigitNumbers[i] ?? ''}
+                  onChange={e => updateThree(i, e.target.value.replace(/\D/g, ''))}
+                  className="number-input" maxLength={3} placeholder="---" />
+              ))}
+            </div>
+            <button className="btn-action btn-random" style={{ width: '100%', marginTop: 12 }} onClick={randomizeAllNumbers}>
+              🎲 สุ่มเลขทั้งหมด
+            </button>
+          </div>
+
+          {/* Section: ตำแหน่งตัวเลข */}
+          <div className="config-section">
+            <h3 className="section-title">📐 ตำแหน่งตัวเลข</h3>
+            <div style={{ marginBottom: 14 }}>
+              <label className="input-group" style={{ display: 'block', marginBottom: 8 }}>
+                <span style={{ fontSize: '0.7rem', color: 'rgba(212,175,55,0.75)', letterSpacing: '1.5px', textTransform: 'uppercase' as const }}>เลือกรูปแบบ Layout</span>
+              </label>
+              <div className="preset-grid">
+                {LAYOUT_PRESETS.map(p => (
+                  <button key={p.id} className={`preset-btn ${activePreset === p.id ? 'active' : ''}`}
+                    onClick={() => applyPreset(p.id)}>
+                    <span className="preset-icon">{p.icon}</span>
+                    <span className="preset-label">{p.label}</span>
+                  </button>
+                ))}
               </div>
             </div>
-
-            <div className="number-row">
-              {twoDigitNumbers.map((num, idx) => (
-                <div key={idx} className="input-group">
-                  <label>{idx === 0 ? 'สองตัว' : ''}</label>
-                  <input
-                    type="text"
-                    value={num}
-                    onChange={(e) => updateTwoDigitNumber(idx, e.target.value)}
-                    className="number-input"
-                    maxLength={2}
-                  />
-                </div>
-              ))}
+            <div className="input-group">
+              <label>ตำแหน่ง 2-ตัว: ด้านไหน</label>
+              <div className="toggle-row">
+                <button className={`toggle-btn ${twoDigitSide === 'left' ? 'active' : ''}`} onClick={() => setTwoDigitSide('left')}>◀ ซ้าย</button>
+                <button className={`toggle-btn ${twoDigitSide === 'right' ? 'active' : ''}`} onClick={() => setTwoDigitSide('right')}>ขวา ▶</button>
+              </div>
             </div>
-
-            <div className="number-row">
-              {threeDigitNumbers.map((num, idx) => (
-                <div key={idx} className="input-group">
-                  <label>{idx === 0 ? 'สามตัว' : ''}</label>
-                  <input
-                    type="text"
-                    value={num}
-                    onChange={(e) => updateThreeDigitNumber(idx, e.target.value)}
-                    className="number-input"
-                    maxLength={3}
-                  />
-                </div>
-              ))}
+            <div className="input-group">
+              <label>เลขเด่น แนวนอน: {prominentOffsetX}%</label>
+              <input type="range" value={prominentOffsetX} onChange={e => setProminentOffsetX(Number(e.target.value))}
+                className="slider" min={-40} max={40} step={1} />
+            </div>
+            <div className="input-group">
+              <label>เลขเด่น แนวตั้ง: {prominentOffsetY}%</label>
+              <input type="range" value={prominentOffsetY} onChange={e => setProminentOffsetY(Number(e.target.value))}
+                className="slider" min={-30} max={30} step={1} />
+            </div>
+            <div className="input-group">
+              <label>เลข 2-ตัว แนวตั้ง: {twoDigitOffsetY}%</label>
+              <input type="range" value={twoDigitOffsetY} onChange={e => setTwoDigitOffsetY(Number(e.target.value))}
+                className="slider" min={-30} max={30} step={1} />
+            </div>
+            <div className="input-group">
+              <label>เลข 3-ตัว แนวตั้ง: {threeDigitOffsetY}%</label>
+              <input type="range" value={threeDigitOffsetY} onChange={e => setThreeDigitOffsetY(Number(e.target.value))}
+                className="slider" min={-30} max={30} step={1} />
             </div>
           </div>
 
-          {/* Social */}
+          {/* Section: ฟอนต์ & สไตล์ */}
           <div className="config-section">
+            <h3 className="section-title">🔤 ฟอนต์ & สไตล์</h3>
             <div className="input-group">
-              <label>โซเชียล</label>
-              <input
-                type="text"
-                value={facebookName}
-                onChange={(e) => setFacebookName(e.target.value)}
-                className="modern-input"
-                placeholder="ชื่อเฟส"
-              />
+              <label>ฟอนต์โพย</label>
+              <select value={posterFont} onChange={e => setPosterFont(e.target.value)} className="modern-input">
+                {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+              </select>
             </div>
             <div className="input-group">
-              <input
-                type="text"
-                value={lineId}
-                onChange={(e) => setLineId(e.target.value)}
-                className="modern-input"
-                placeholder="ไอดีไลน์"
-              />
+              <label>สไตล์กล่องตัวเลข</label>
+              <select value={numberStyle} onChange={e => setNumberStyle(e.target.value)} className="modern-input">
+                {NUMBER_STYLES.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+              </select>
+            </div>
+            <div className="input-group">
+              <label>สีตัวเลข (Accent)</label>
+              <select value={accentColor} onChange={e => setAccentColor(e.target.value)} className="modern-input">
+                {ACCENT_COLORS.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
+              </select>
+              <div className="color-row" style={{ marginTop: 6 }}>
+                <input type="color" value={accentColor} onChange={e => setAccentColor(e.target.value)} className="color-picker" />
+                <span style={{ fontSize: '0.75rem', color: 'rgba(212,175,55,0.6)' }}>กำหนดเอง</span>
+              </div>
             </div>
           </div>
 
-          {/* Watermark */}
+          {/* Section: ขนาดตัวเลข */}
           <div className="config-section">
+            <h3 className="section-title">📏 ขนาดตัวเลข</h3>
+            <div className="input-group">
+              <label>เลขเด่น: {prominentSize} rem</label>
+              <input type="range" value={prominentSize} onChange={e => setProminentSize(Number(e.target.value))}
+                className="slider" min={4} max={12} step={0.5} />
+            </div>
+            <div className="input-group">
+              <label>เลข 2 ตัว: {twoDigitSize} rem</label>
+              <input type="range" value={twoDigitSize} onChange={e => setTwoDigitSize(Number(e.target.value))}
+                className="slider" min={1} max={4} step={0.1} />
+            </div>
+            <div className="input-group">
+              <label>เลข 3 ตัว: {threeDigitSize} rem</label>
+              <input type="range" value={threeDigitSize} onChange={e => setThreeDigitSize(Number(e.target.value))}
+                className="slider" min={1} max={4} step={0.1} />
+            </div>
+          </div>
+
+          {/* Section: ขนาดโพย */}
+          <div className="config-section">
+            <h3 className="section-title">📐 ขนาดโพย</h3>
+            <div className="input-group">
+              <label>กว้าง × สูง (px)</label>
+              <div className="size-input-group">
+                <input type="number" value={posterWidth}  onChange={e => setPosterWidth(Number(e.target.value))}  className="modern-input" min={250} max={700} />
+                <span className="size-separator">×</span>
+                <input type="number" value={posterHeight} onChange={e => setPosterHeight(Number(e.target.value))} className="modern-input" min={400} max={1000} />
+              </div>
+            </div>
+          </div>
+
+          {/* Section: รูปพื้นหลัง */}
+          <div className="config-section">
+            <h3 className="section-title">🖼 รูปพื้นหลัง</h3>
+            <button className="btn-action btn-preview" style={{ width: '100%', marginBottom: 14 }} onClick={() => fileInputRef.current?.click()}>
+              📂 อัพโหลดรูปพื้นหลัง
+            </button>
+            {backgroundImage && (
+              <button className="btn-action btn-share" style={{ width: '100%', marginBottom: 14 }} onClick={() => setBackgroundImage(null)}>
+                ✕ ลบรูปพื้นหลัง
+              </button>
+            )}
+            <div className="input-group">
+              <label>ซูมรูป: {bgScale}%</label>
+              <input type="range" value={bgScale} onChange={e => setBgScale(Number(e.target.value))}
+                className="slider" min={50} max={300} step={5} />
+            </div>
+            <div className="input-group">
+              <label>ตำแหน่ง แนวนอน: {bgPosX}%</label>
+              <input type="range" value={bgPosX} onChange={e => setBgPosX(Number(e.target.value))}
+                className="slider" min={0} max={100} step={1} />
+            </div>
+            <div className="input-group">
+              <label>ตำแหน่ง แนวตั้ง: {bgPosY}%</label>
+              <input type="range" value={bgPosY} onChange={e => setBgPosY(Number(e.target.value))}
+                className="slider" min={0} max={100} step={1} />
+            </div>
+            <div className="input-group">
+              <label>ความมืดพื้นหลัง: {overlayOpacity}%</label>
+              <input type="range" value={overlayOpacity} onChange={e => setOverlayOpacity(Number(e.target.value))}
+                className="slider" min={0} max={85} step={5} />
+            </div>
+          </div>
+
+          {/* Section: โซเชียล */}
+          <div className="config-section">
+            <h3 className="section-title">💬 โซเชียล</h3>
+            <div className="input-group">
+              <label>Facebook</label>
+              <input type="text" value={facebookName} onChange={e => setFacebookName(e.target.value)} className="modern-input" placeholder="ชื่อเฟส" />
+            </div>
+            <div className="input-group" style={{ marginTop: 8 }}>
+              <label>LINE ID</label>
+              <input type="text" value={lineId} onChange={e => setLineId(e.target.value)} className="modern-input" placeholder="ไอดีไลน์" />
+            </div>
+          </div>
+
+          {/* Section: ลายน้ำ */}
+          <div className="config-section">
+            <h3 className="section-title">💧 ลายน้ำ</h3>
             <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={showWatermark}
-                onChange={(e) => setShowWatermark(e.target.checked)}
-              />
-              <span>ใส่วอเตอร์มาร์ค</span>
+              <input type="checkbox" checked={showWatermark} onChange={e => setShowWatermark(e.target.checked)} />
+              <span>แสดง Watermark DUMPSC.COM</span>
             </label>
           </div>
 
           {/* Action Buttons */}
           <div className="action-buttons">
-            <button className="btn-action btn-random" onClick={randomizeAllNumbers}>
-              สุ่มเลข
-            </button>
-            <button className="btn-action btn-preview" onClick={handlePreview}>
-              ดูตัวอย่าง
-            </button>
-            <button className="btn-action btn-download" onClick={downloadPNG}>
-              ดาวน์โหลด
-            </button>
-            <button className="btn-action btn-share" onClick={shareImage}>
-              แชร์รูปนี้
-            </button>
+            <button className="btn-action btn-preview"  onClick={() => setShowPreviewModal(true)}>👁 ดูตัวอย่าง</button>
+            <button className="btn-action btn-download" onClick={downloadPNG}>⬇ ดาวน์โหลด</button>
+            <button className="btn-action btn-share"    onClick={shareImage}>📤 แชร์</button>
           </div>
         </div>
       </div>
 
-      {/* Preview Panel */}
+      {/* ══════════════════════════════════════════
+          POSTER PREVIEW
+      ══════════════════════════════════════════ */}
       <div className="preview-panel">
-        <div 
+        <div
           className="poster"
           ref={posterRef}
           style={{
-            backgroundImage: backgroundImage 
-              ? `url(${backgroundImage})` 
-              : 'linear-gradient(135deg, #2d1b4e 0%, #1a1a2e 100%)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            width:  `${posterWidth}px`,
+            height: `${posterHeight}px`,
+            backgroundImage: posterBg,
+            backgroundSize: backgroundImage ? `${bgScale}%` : 'cover',
+            backgroundPosition: backgroundImage ? `${bgPosX}% ${bgPosY}%` : 'center',
+            backgroundRepeat: 'no-repeat',
+            fontFamily: `'${posterFont}', 'Prompt', sans-serif`,
           }}
         >
-          {/* Overlay */}
-          <div className="poster-overlay"></div>
+          {/* Gold inner frame border */}
+          <div className="poster-frame"></div>
 
-          {/* Header */}
+          {/* Dark overlay */}
+          <div className="poster-overlay" style={{
+            background: `rgba(0,0,0,${overlayOpacity / 100})`
+          }}></div>
+
+          {/* DUMPSC Badge — top right */}
+          <div className="dumpsc-badge">
+            <span className="dumpsc-logo">DUMPSC</span>
+            <span className="dumpsc-domain">.com</span>
+          </div>
+
+          {/* ── HEADER ZONE ── */}
           <div className="poster-header">
-            <div className="poster-title">
-              <span className="title-main">หวย</span>
-              <span className="title-sub">{lotteryName}</span>
-              <span className="title-extra">เลขเด็ด</span>
+            <div className="poster-title-text" style={{ color: accentColor }}>หวย</div>
+            <div className="poster-lottery-name">{lotteryName}</div>
+            <div className="poster-subtitle" style={{ color: accentColor }}>เลขเด็ด</div>
+          </div>
+
+          {/* ── BODY ZONE (prominent + 2-digit) ── */}
+          <div className="poster-body">
+            {/* Date pill */}
+            <div className="poster-date-pill" style={{ borderColor: accentColor, color: accentColor }}>
+              {formatDate(lotteryDate)}
             </div>
-            <div className="poster-date">{formatDate(lotteryDate)}</div>
-          </div>
 
-          {/* Prominent Number */}
-          <div className="prominent-section">
-            <div className="prominent-number">{prominentNumber}</div>
-            <div className="prominent-label">เด่น</div>
-          </div>
-
-          {/* Two Digit Numbers - Right Side */}
-          <div className="two-digit-section">
-            {twoDigitNumbers.filter(n => n).map((num, idx) => (
-              <div key={idx} className="two-digit-number">{num}</div>
-            ))}
-          </div>
-
-          {/* Three Digit Numbers - Bottom */}
-          <div className="three-digit-section">
-            {threeDigitNumbers.filter(n => n).map((num, idx) => (
-              <div key={idx} className="three-digit-number">{num}</div>
-            ))}
-          </div>
-
-          {/* Social */}
-          {(facebookName || lineId) && (
-            <div className="social-section">
-              {facebookName && (
-                <div className="social-badge facebook">
-                  <span className="social-icon">f</span>
-                  <span>{facebookName}</span>
+            {/* Prominent number in center */}
+            <div className="prominent-area" style={{
+              transform: `translate(${prominentOffsetX}%, ${prominentOffsetY}%)`,
+            }}>
+              <div className="prominent-ring" style={{
+                width: `${Math.max(prominentSize * 14, 100)}px`,
+                height: `${Math.max(prominentSize * 14, 100)}px`,
+                borderColor: `${accentColor}80`,
+              }}>
+                <div className="prominent-number" style={{
+                  fontSize: `${prominentSize}rem`,
+                  color: accentColor,
+                  textShadow: `0 0 30px ${accentColor}, 0 0 60px ${accentColor}66, 0 4px 8px rgba(0,0,0,0.8)`,
+                }}>
+                  {prominentNumber}
                 </div>
-              )}
-              {lineId && (
-                <div className="social-badge line">
-                  <span className="social-icon">L</span>
-                  <span>{lineId}</span>
-                </div>
-              )}
+              </div>
+              <div className="prominent-label" style={{ color: accentColor }}>เด่น</div>
             </div>
-          )}
+
+            {/* 2-digit column */}
+            <div className="two-digit-col" style={{
+              [twoDigitSide]: '16px',
+              [twoDigitSide === 'right' ? 'left' : 'right']: 'auto',
+              transform: `translateY(${twoDigitOffsetY}%)`,
+            }}>
+              {displayTwo.map((num, i) => (
+                <div key={i} className={`num-box num-style-${numberStyle}`} style={{
+                  fontSize: `${twoDigitSize}rem`,
+                  borderColor: `${accentColor}55`,
+                  color: accentColor,
+                  textShadow: numberStyle === 'glow' ? `0 0 18px ${accentColor}` : `0 2px 6px rgba(0,0,0,0.9)`,
+                }}>
+                  {num}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── FOOTER ZONE (3-digit + social) ── */}
+          <div className="poster-footer" style={{
+            transform: `translateY(${-threeDigitOffsetY}%)`,
+          }}>
+            <div className="three-digit-row">
+              {displayThree.map((num, i) => (
+                <div key={i} className={`num-box num-box-wide num-style-${numberStyle}`} style={{
+                  fontSize: `${threeDigitSize}rem`,
+                  borderColor: `${accentColor}55`,
+                  color: accentColor,
+                  textShadow: numberStyle === 'glow' ? `0 0 18px ${accentColor}` : `0 2px 6px rgba(0,0,0,0.9)`,
+                }}>
+                  {num}
+                </div>
+              ))}
+            </div>
+
+            {(facebookName || lineId) && (
+              <div className="social-row">
+                {facebookName && (
+                  <div className="social-pill fb">
+                    <span className="social-icon">f</span>
+                    <span>{facebookName}</span>
+                  </div>
+                )}
+                {lineId && (
+                  <div className="social-pill ln">
+                    <span className="social-icon">L</span>
+                    <span>{lineId}</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Watermark */}
           {showWatermark && (
             <div className="watermark">
-              <span>ทีเด็ด7โกรก</span>
-              <span>ทีเด็ด7โกรก</span>
-              <span>ทีเด็ด7โกรก</span>
-              <span>ทีเด็ด7โกรก</span>
-              <span>ทีเด็ด7โกรก</span>
+              {[1,2,3,4].map(i => <span key={i}>DUMPSC.COM</span>)}
             </div>
           )}
         </div>
 
-        {/* Change Background Button */}
-        <button className="change-bg-btn" onClick={changeBackground}>
-          เปลี่ยนรูปพื้นหลัง
-        </button>
+        {/* Quick actions */}
+        <div className="poster-actions">
+          <button className="btn-action btn-random"   onClick={randomizeAllNumbers}>🎲 สุ่มเลข</button>
+          <button className="btn-action btn-download" onClick={downloadPNG}>⬇ ดาวน์โหลด</button>
+        </div>
       </div>
     </div>
   )

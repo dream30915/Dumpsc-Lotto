@@ -1,73 +1,160 @@
-# React + TypeScript + Vite
+# 🎰 DUMPSC Lotto - โปรแกรมทำนายหวยอัตโนมัติ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
+  <img src="https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vite-7.2.4-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind-3.4.19-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+</div>
 
-Currently, two official plugins are available:
+## ✨ คุณสมบัติเด่น
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 **Luxury Design** - ดีไซน์สวยงามระดับพรีเมียม
+- 📱 **Responsive** - รองรับทั้งมือถือและคอมพิวเตอร์
+- 🎯 **ปรับแต่งได้** - ปรับขนาดโปสเตอร์และตัวเลขได้ตามต้องการ
+- 🌍 **ธงประเทศ** - มีธงประเทศสำหรับแต่ละประเภทหวย
+- 💧 **Watermark** - มีวอเตอร์มาร์ค DUMPSC.COM
+- 📥 **ดาวน์โหลด** - ดาวน์โหลดรูปภาพได้
+- 🔗 **แชร์** - แชร์รูปภาพได้ง่าย
+- 🖼️ **เปลี่ยนพื้นหลัง** - อัพโหลดรูปพื้นหลังได้
 
-## React Compiler
+## 🎯 ประเภทหวยที่รองรับ
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### รายวัน (Daily)
+- ประชาชนลาว, ลาวExtra, ฮานอยอาเชียน
+- ลาว TV, ฮานอย HD, ฮานอย สตาร์
+- ลาว HD, ฮานอย TV, ลาวสตาร์
+- และอีกมากมาย...
 
-## Expanding the ESLint configuration
+### รัฐบาลไทย
+- รัฐบาลไทย, ออมสิน, ธ.ก.ส
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### ฮานอย
+- ฮานอย, ฮานอยพิเศษ, ฮานอยปกติ
+- ฮานอย VIP, ฮานอยมัดรวม
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### หุ้น (Stock)
+- หุ้นนิเคอิ (เช้า/บ่าย)
+- หุ้นจีน (เช้า/บ่าย)
+- หุ้นฮั้งเส็ง (เช้า/บ่าย)
+- หุ้นไต้หวัน, หุ้นเกาหลี
+- หุ้นสิงค์โปร์, หุ้นอินเดีย
+- หุ้นเยอรมัน, หุ้นรัสเซีย
+- หุ้นอังกฤษ, หุ้นดาวโจนส์
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### หุ้น VIP
+- ทุกประเภทหุ้นในรูปแบบ VIP
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### พิเศษ (Special)
+- ฮานอยเที่ยง, ลาวพิเศษ
+- ลาวVIP, ลาวเวียงจัน
+
+### อื่นๆ (Others)
+- ฮานอย EXTRA, ฮานอยตรุษจีน
+
+## 🚀 การติดตั้งและใช้งาน
+
+### ติดตั้ง Dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### รันในโหมด Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+เปิดเบราว์เซอร์และไปที่ `http://localhost:5173`
+
+### Build สำหรับ Production
+
+```bash
+npm run build
+```
+
+ไฟล์ที่ build เสร็จจะอยู่ในโฟลเดอร์ `dist`
+
+### Preview Build
+
+```bash
+npm run preview
+```
+
+## 📦 การ Deploy บน Hostinger
+
+ดูคู่มือการ deploy ได้ที่ [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+### สรุปขั้นตอน
+
+1. Build โปรเจค: `npm run build`
+2. Upload ไฟล์จากโฟลเดอร์ `dist` ไปยัง Hostinger
+3. ตั้งค่า Domain/Subdomain ให้ชี้ไปที่โฟลเดอร์ที่ upload
+4. สร้างไฟล์ `.htaccess` สำหรับ SPA routing
+5. เปิดเว็บไซต์และทดสอบ
+
+## 🎨 การปรับแต่ง UI
+
+### ปรับขนาดโปสเตอร์
+
+```typescript
+// ในส่วน UI Customization
+setPosterWidth(400)  // ความกว้าง (300-600px)
+setPosterHeight(700) // ความสูง (500-900px)
+```
+
+### ปรับขนาดตัวเลข
+
+```typescript
+setProminentSize(10)   // ตัวเลขเด่น (6-14 rem)
+setTwoDigitSize(2.5)   // เลข 2 ตัว (1.5-4 rem)
+setThreeDigitSize(2.5) // เลข 3 ตัว (1.5-4 rem)
+```
+
+## 🛠️ เทคโนโลยีที่ใช้
+
+- **React 19.2.0** - UI Library
+- **TypeScript 5.9.3** - Type Safety
+- **Vite 7.2.4** - Build Tool
+- **Tailwind CSS 3.4.19** - Styling
+- **html2canvas 1.4.1** - Screenshot/Download
+- **Radix UI** - Accessible Components
+- **Lucide React** - Icons
+
+## 📱 Responsive Design
+
+เว็บไซต์รองรับหน้าจอทุกขนาด:
+
+- 📱 Mobile (< 600px)
+- 📱 Tablet (600px - 900px)
+- 💻 Desktop (900px - 1400px)
+- 🖥️ Large Desktop (> 1400px)
+
+## 🎯 การใช้งาน
+
+1. **เลือกประเภทหวย** - คลิกที่การ์ดหวยที่ต้องการ
+2. **กรอกข้อมูล** - กรอกเลขเด่น, เลข 2 ตัว, เลข 3 ตัว
+3. **ปรับแต่ง** - ปรับขนาดและรูปแบบตามต้องการ
+4. **เปลี่ยนพื้นหลัง** - อัพโหลดรูปพื้นหลังได้
+5. **ดาวน์โหลด/แชร์** - บันทึกหรือแชร์รูปภาพ
+
+## 🌐 Domain
+
+- **Domain หลัก**: dumpsc.com
+- **แนะนำ Subdomain**:
+  - lotto.dumpsc.com
+  - lottery.dumpsc.com
+  - huay.dumpsc.com
+
+## 📄 License
+
+This project is private and proprietary to DUMPSC.
+
+## 👨‍💻 Developer
+
+Developed with ❤️ by DUMPSC Team
+
+---
+
+**หมายเหตุ**: โปรเจคนี้ใช้สำหรับ dumpsc.com เท่านั้น ห้ามนำไปใช้เพื่อการค้าโดยไม่ได้รับอนุญาต
